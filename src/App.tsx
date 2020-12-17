@@ -1,5 +1,7 @@
 import React from 'react';
 
-const App = (): JSX.Element => <div>Test</div>;
+import LeafletMap from '@/components/LeafletMap';
+
+const App: React.FC = () => <LeafletMap />;
 
 export default App;
