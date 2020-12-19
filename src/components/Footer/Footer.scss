@@ -1,0 +1,54 @@
+.footer {
+  box-sizing: border-box;
+  max-width: 2520px;
+  width: 100%;
+  margin: auto auto 0;
+  background-color: #161B22;
+}
+
+.footer__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 40px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background-color: #161B22;
+}
+
+.footer__school {
+  display: flex;
+  align-items: center;
+  width: 95px;
+  height: 25px;
+  color: #30363D;
+  text-decoration: none;
+
+  &:hover {
+    color: #C9D1D9;
+  }
+}
+
+.footer__school-icon {
+  width: 65px;
+  height: 25px;
+  margin-right: 10px;
+  border: 1px solid #30363D;
+  border-radius: 2px;
+  background-color: #30363D;
+
+  .footer__school:hover & {
+    background-color: #C9D1D9;
+  }
+}
+
+.footer__link {
+  margin-left: 20px;
+  color: #30363D;
+  text-decoration: none;
+
+  &:hover {
+    color: #C9D1D9;
+  }
+}

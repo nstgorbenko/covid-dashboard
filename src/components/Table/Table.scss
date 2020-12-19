@@ -1,0 +1,41 @@
+.grid__element {
+  position: relative;
+  background: #161B22;
+  border: 1px solid #30363D;
+  border-radius: 4px;
+}
+
+.table {
+  grid-area: t;
+}
+
+.table__content {
+  border-collapse: collapse;
+  width: calc(100% - 10px);
+  margin: 0 auto;
+}
+
+.table__title {
+  padding: 5px;
+  text-align: left;
+  font-weight: normal;
+  border: 1px solid #30363D;
+}
+
+.table__info {
+  padding: 5px;
+  font-weight: bold;
+  color: #238636;
+  border: 1px solid #30363D;
+}
+
+.table__row {
+  &--active {
+    background-color: #474f59;
+  }
+
+  &:not(.table__row--active):hover {
+    background-color: #21262D;
+    cursor: pointer;
+  }
+}

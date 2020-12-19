@@ -1,0 +1,36 @@
+.header {
+  box-sizing: border-box;
+  max-width: 2520px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #161B22;
+}
+
+.header__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  max-width: 1024px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background-color: #161B22;
+}
+
+.header__title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
+  line-height: 22px;
+  color: #C9D1D9;
+
+  @media (max-width: 900px) {
+    font-size: 28px;
+  }
+
+  &--more {
+    @media (max-width: 900px) {
+      display: none;
+    }
+  }
+}

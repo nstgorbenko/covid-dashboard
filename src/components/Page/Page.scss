@@ -1,0 +1,15 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #0D1117;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #C9D1D9;
+
+  @media (max-width: 900px) {
+    min-height: 100vh;
+    height: 100%;
+  }
+}
