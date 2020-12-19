@@ -9,7 +9,7 @@ interface IPost {
   todayDeaths: number;
   recovered: number;
   todayRecovered: number;
-  flag: string;
+  countryInfo: {flag: string}
 }
 
 const inputStyle = {
@@ -72,8 +72,7 @@ const Table: React.SFC = () => {
       <input type="text" style={inputStyle} onChange={e => setCountry(e.target.value)} />
       {posts.filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
         .map(c => (
-  /*        указать типы */
-          <div>
+          <div key={c.country}>
             <p>Country : {c.country}</p>
             <p>Cases: {c.cases}</p>
             <p>Today cases: {c.todayCases}</p>
