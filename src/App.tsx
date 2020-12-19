@@ -1,5 +1,9 @@
 import React from 'react';
 
-const App = (): JSX.Element => <div>Test</div>;
+import Table from './components/Table';
+
+const App = (): JSX.Element => (
+  <div><Table /></div>
+);
 
 export default App;
