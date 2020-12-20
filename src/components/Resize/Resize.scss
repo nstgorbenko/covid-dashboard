@@ -1,3 +1,5 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
 .resize {
   position: absolute;
   top: -10px;
@@ -8,22 +10,22 @@
   padding: 6px;
   z-index: 1;
   border-radius: 50%;
-  background-color: #161B22;
-  border: 1px solid #30363D;
+  background-color: $main-color--darker;
+  border: 1px solid $main-color;
   cursor: pointer;
 
   &:hover {
-    border: 1px solid #C9D1D9;
+    border: 1px solid $main-color--lightest;
   }
 }
 
 .resize__icon {
   width: 16px;
   height: 16px;
-  fill: #30363D;
+  fill: $main-color;
 
   .resize:hover & {
-    fill: #C9D1D9;
+    fill: $main-color--lightest;
   }
 
   .resize--collapse &--expand,

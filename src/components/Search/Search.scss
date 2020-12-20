@@ -1,3 +1,5 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
 .search {
   position: relative;
   display: flex;
@@ -13,20 +15,20 @@
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 24px;
-  color: #C9D1D9;
-  border: 1px solid #30363D;
+  color: $main-color--lightest;
+  border: 1px solid $main-color;
   border-radius: 4px;
-  background-color: #161B22;
+  background-color: $main-color--darker;
   outline: none;
   cursor: pointer;
 
   &::placeholder {
-    color: #30363D;
+    color: $main-color;
   }
 
   &:hover,
   &:focus {
-    border: 1px solid #C9D1D9;
+    border: 1px solid $main-color--lightest;
   }
 }
 
@@ -39,10 +41,10 @@
 }
 
 .search__reset-icon {
-  fill: #30363D;
+  fill: $main-color;
 
   .search__reset:hover & {
-    fill: #C9D1D9;
+    fill: $main-color--lightest;
   }
 }
 
@@ -57,9 +59,9 @@
 .search__keyboard-icon {
   width: 40px;
   height: 40px;
-  fill: #30363D;
+  fill: $main-color;
 
   .search__keyboard:hover & {
-    fill: #C9D1D9;
+    fill: $main-color--lightest;
   }
 }

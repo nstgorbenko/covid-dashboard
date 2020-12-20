@@ -1,3 +1,5 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
 .main {
   display: flex;
   justify-content: center;
@@ -7,7 +9,7 @@
   width: 100%;
   margin: 0 auto;
 
-  @media (max-width: 900px) {
+  @media (max-width: $tablet-width) {
     height: 100%;
   }
 }
@@ -17,7 +19,7 @@
   width: calc(100% - 40px);
   height: calc(100vh - 80px - 40px - 40px);
 
-  @media (max-width: 900px) {
+  @media (max-width: $tablet-width) {
     height: 100%;
     margin: 20px 0;
   }
@@ -35,7 +37,7 @@
   "l c c c c";
   gap: 20px;
 
-  @media (max-width: 900px) {
+  @media (max-width: $tablet-width) {
     grid-template-columns: 1fr;
     grid-template-rows: none;
     grid-template-areas:

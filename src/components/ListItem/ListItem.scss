@@ -1,15 +1,17 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
 .list__item {
   display: flex;
   flex-wrap: wrap;
   padding: 5px 10px;
-  border-bottom: 1px solid #30363D;
+  border-bottom: 1px solid $main-color;
 
   &--active {
-    background-color: #474f59;
+    background-color: $main-color--light;
   }
 
   &:not(.list__item--active):hover {
-    background-color: #21262D;
+    background-color: $main-color--dark;
     cursor: pointer;
   }
 }
@@ -17,7 +19,7 @@
 .list__item-count {
   margin-right: 5px;
   font-weight: bold;
-  color: #238636;
+  color: $green;
 }
 
 .list__item-country {
@@ -25,6 +27,7 @@
 }
 
 .list__item-flag {
+  display: inline;
   width: 22px;
   height: 22px;
   margin-bottom: -5px;

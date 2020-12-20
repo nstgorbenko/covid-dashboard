@@ -1,9 +1,11 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
 .footer {
   box-sizing: border-box;
-  max-width: 2520px;
+  max-width: $desktop-width;
   width: 100%;
   margin: auto auto 0;
-  background-color: #161B22;
+  background-color: $main-color--darker;
 }
 
 .footer__wrapper {
@@ -14,7 +16,7 @@
   height: 40px;
   margin: 0 auto;
   padding: 0 20px;
-  background-color: #161B22;
+  background-color: $main-color--darker;
 }
 
 .footer__school {
@@ -22,11 +24,11 @@
   align-items: center;
   width: 95px;
   height: 25px;
-  color: #30363D;
+  color: $main-color;
   text-decoration: none;
 
   &:hover {
-    color: #C9D1D9;
+    color: $main-color--lightest;
   }
 }
 
@@ -34,21 +36,21 @@
   width: 65px;
   height: 25px;
   margin-right: 10px;
-  border: 1px solid #30363D;
+  border: 1px solid $main-color;
   border-radius: 2px;
-  background-color: #30363D;
+  background-color: $main-color;
 
   .footer__school:hover & {
-    background-color: #C9D1D9;
+    background-color: $main-color--lightest;
   }
 }
 
 .footer__link {
   margin-left: 20px;
-  color: #30363D;
+  color: $main-color;
   text-decoration: none;
 
   &:hover {
-    color: #C9D1D9;
+    color: $main-color--lightest;
   }
 }

@@ -1,7 +1,9 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
 .grid__element {
   position: relative;
-  background: #161B22;
-  border: 1px solid #30363D;
+  background: $main-color--darker;
+  border: 1px solid $main-color;
   border-radius: 4px;
 }
 
@@ -19,23 +21,23 @@
   padding: 5px;
   text-align: left;
   font-weight: normal;
-  border: 1px solid #30363D;
+  border: 1px solid $main-color;
 }
 
 .table__info {
   padding: 5px;
   font-weight: bold;
-  color: #238636;
-  border: 1px solid #30363D;
+  color: $green;
+  border: 1px solid $main-color;
 }
 
 .table__row {
   &--active {
-    background-color: #474f59;
+    background-color: $main-color--light;
   }
 
   &:not(.table__row--active):hover {
-    background-color: #21262D;
+    background-color: $main-color--dark;
     cursor: pointer;
   }
 }

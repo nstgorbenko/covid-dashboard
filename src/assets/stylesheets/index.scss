@@ -1,1 +1,6 @@
-@charset 'UTF-8';
+// Utils
+@import "./utils/variables.scss";
+
+// Base
+@import "./base/fonts.scss";
+@import "./base/reset.scss";

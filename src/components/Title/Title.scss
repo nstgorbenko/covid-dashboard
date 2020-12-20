@@ -1,3 +1,5 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
 .title {
   display: flex;
   justify-content: space-between;
@@ -19,7 +21,7 @@
   margin: 5px;
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
-  border-right: 10px solid #30363D;
+  border-right: 10px solid $main-color;
   cursor: pointer;
 
   &--right {
@@ -27,6 +29,6 @@
   }
 
   &:hover {
-    border-right: 10px solid #C9D1D9;
+    border-right: 10px solid $main-color--lightest;
   }
 }
