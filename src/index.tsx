@@ -6,14 +6,15 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from '@/App';
+import data from '@/markup/data';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <CookiesProvider>
-        <App />
+        <App countriesInfo={data} />
       </CookiesProvider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('app')
+  document.getElementById('root')
 );
