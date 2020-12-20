@@ -1,0 +1,36 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
+.grid__element {
+  position: relative;
+  background: $main-color--darker;
+  border: 1px solid $main-color;
+  border-radius: 4px;
+}
+
+.list {
+  grid-area: l;
+  display: flex;
+  flex-direction: column;
+}
+
+.list__items {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: auto;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar-track {
+    background-color: $main-color--dark;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    background-color: $main-color--dark;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $main-color;
+  }
+}

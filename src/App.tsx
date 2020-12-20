@@ -1,8 +1,18 @@
 import React from 'react';
-import Table from './components/Table';
-import LeafletMap from '@/components/LeafletMap';
+import Page from '@/components/Page';
+import { CountryInfo } from '@/types/entities';
 
-const App: React.FC = () => 
-    <div><Table /><LeafletMap /></div>;
+interface AppProps {
+  countriesInfo: Array<CountryInfo>;
+}
+
+const App: React.FC<AppProps> = (props: AppProps) => {
+  const { countriesInfo } = props;
+
+  return (
+    <Page countriesInfo={countriesInfo}/>
+  );
+};
 
 export default App;
+

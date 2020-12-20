@@ -1,0 +1,31 @@
+@import '@/assets/stylesheets/utils/variables.scss';
+
+.grid__element {
+  position: relative;
+  background: $main-color--darker;
+  border: 1px solid $main-color;
+  border-radius: 4px;
+}
+
+.map {
+  grid-area: m;
+  display: flex;
+  flex-direction: column;
+}
+
+/* разворачивает блок информации на весь экран */
+.grid__element--show {
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  left: -10px;
+  right: -10px;
+  height: calc(100vh - 80px - 40px - 20px);
+  grid-area: none;
+  z-index: 2;
+}
+
+/* скрывает блок информации */
+.grid__element--hide {
+  display: none;
+}
