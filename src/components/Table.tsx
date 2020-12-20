@@ -9,7 +9,7 @@ interface IPost {
   todayDeaths: number;
   recovered: number;
   todayRecovered: number;
-  countryInfo: {flag: string}
+  countryInfo: {flag: string};
 }
 
 const inputStyle = {
@@ -28,7 +28,7 @@ const inputStyle = {
 
 const defaultPosts: IPost[] = [];
 
-const Table: React.SFC = () => {
+const Table: React.FC = () => {
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(
     defaultPosts
   );
@@ -73,18 +73,38 @@ const Table: React.SFC = () => {
       {posts.filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
         .map(c => (
           <div key={c.country}>
-            <p>Country : {c.country}</p>
-            <p>Cases: {c.cases}</p>
-            <p>Today cases: {c.todayCases}</p>
-            <p>Deaths: {c.deaths}</p>
-            <p>Today deaths: {c.todayDeaths}</p>
-            <p>Recovered: {c.recovered}</p>
-            <p>Today recovered: {c.todayRecovered}</p>
-            <img src={c.countryInfo.flag} alt='Flag' />
+            <p>
+              Country :
+              {c.country}
+            </p>
+            <p>
+              Cases:
+              {c.cases}
+            </p>
+            <p>
+              Today cases:
+              {c.todayCases}
+            </p>
+            <p>
+              Deaths:
+              {c.deaths}
+            </p>
+            <p>
+              Today deaths:
+              {c.todayDeaths}
+            </p>
+            <p>
+              Recovered:
+              {c.recovered}
+            </p>
+            <p>
+              Today recovered:
+              {c.todayRecovered}
+            </p>
+            <img src={c.countryInfo.flag} alt="Flag" />
             <br />
           </div>
-        ))
-      }
+        ))}
       {error && <p>{error}</p>}
     </div>
   );
