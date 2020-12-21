@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import styles from './Table.scss';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
+import { Screen } from '@/constants/constants';
 
 const Table: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const Table: React.FC = () => {
       styles['table'],
       styles['grid__element']
     )}>
-      <Resize/>
+      <Resize isFullScreen={false} onClick={() => {}}/>
       <Title/>
       <table className={styles['table__content']}>
         <tbody>

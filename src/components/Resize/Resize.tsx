@@ -2,12 +2,23 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './Resize.scss';
 
-const Resize: React.FC = () => {
+interface ResizeProps {
+  isFullScreen: boolean;
+  onClick(): void;
+}
+
+const Resize: React.FC<ResizeProps> = (props: ResizeProps) => {
+  const { isFullScreen, onClick } = props;
+
+  const resizeClass = isFullScreen
+    ? classNames(styles['resize'], styles['resize--collapse'])
+    : classNames(styles['resize'], styles['resize--expand']);
+
   return (
-    <div className={classNames(
-      styles['resize'],
-      styles['resize--collapse']
-    )}>
+    <div
+      className={resizeClass}
+      onClick={onClick}
+    >
       <svg className={styles['resize__icon']}>
         <use className={styles['resize__icon--expand']} xlinkHref="#icon-expand"></use>
         <use className={styles['resize__icon--collapse']} xlinkHref="#icon-collapse"></use>

@@ -32,20 +32,3 @@
   height: 17px;
   margin: 0 5px -3px 10px;
 }
-
-/* разворачивает блок информации на весь экран */
-.grid__element--show {
-  position: absolute;
-  top: -10px;
-  bottom: -10px;
-  left: -10px;
-  right: -10px;
-  height: calc(100vh - 80px - 40px - 20px);
-  grid-area: none;
-  z-index: 2;
-}
-
-/* скрывает блок информации */
-.grid__element--hide {
-  display: none;
-}

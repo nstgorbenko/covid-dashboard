@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import classNames from 'classnames';
 import styles from './List.scss';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
 import ListItem from '@/components/ListItem';
 import {connect} from "react-redux";
-import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
+import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector';
 import { ActionCreator } from '@/store/app/app';
 import { Parameter, Screen } from '@/constants/constants';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
@@ -14,25 +14,37 @@ import { getCountriesData } from '@/store/data/selector';
 import { getShownCountriesData } from '@/utils/countries-data';
 
 interface ListProps {
+  fullScreen: Screen;
   country: string;
   parameter: Parameter;
-  activeScreen: Screen; // добавлять класс элементу и кнопке ресайза или нет
   countriesData: Array<CountryDataInterface>;
   changeCountry(country: string): void;
-  changeActiveScreen(screen: Screen): void; // по щелчку на кнопку ресайза срабатывает смена или закрывается текущий - сложная логика тоже
+  changeActiveScreen(screen: Screen): void;
 }
 
 const List: React.FC<ListProps> = (props: ListProps) => {
-  const { country, parameter, activeScreen, countriesData, changeCountry, changeActiveScreen } = props;
-
+  const { fullScreen, country, parameter, countriesData, changeCountry, changeActiveScreen } = props;
   const shownCountriesData = getShownCountriesData(countriesData, parameter);
 
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const changeScreenView = () => {
+    isFullScreen ? changeActiveScreen(Screen.ALL) : changeActiveScreen(Screen.LIST);
+    setIsFullScreen(prev => !prev);
+  };
+
+  let listClass = '';
+  if (isFullScreen) {
+    listClass = classNames(styles['list'], styles['grid__element'], styles['grid__element--show']);
+  } else if (!isFullScreen && fullScreen !== Screen.ALL) {
+    listClass = classNames(styles['list'], styles['grid__element'], styles['grid__element--hide']);
+  } else {
+    listClass = classNames(styles['list'], styles['grid__element']);
+  }
+
   return (
-    <div className={classNames(
-      styles['list'],
-      styles['grid__element']
-    )}>
-      <Resize/>
+    <div className={listClass}>
+      <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
       <Title/>
       <ul className={styles['list__items']}>
         {shownCountriesData.map((countryData) =>
@@ -49,10 +61,10 @@ const List: React.FC<ListProps> = (props: ListProps) => {
 };
 
 const mapStateToProps = (state: StateInterface) => ({
-   country: getCountry(state),
-   parameter: getParameter(state),
-   activeScreen: getActiveScreen(state),
-   countriesData: getCountriesData(state),
+  fullScreen: getActiveScreen(state),
+  country: getCountry(state),
+  parameter: getParameter(state),
+  countriesData: getCountriesData(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

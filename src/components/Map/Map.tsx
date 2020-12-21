@@ -4,6 +4,7 @@ import styles from './Map.scss';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
 import LeafletMap from '../LeafletMap';
+import { Screen } from '@/constants/constants';
 
 const Map: React.FC = () => {
   return (
@@ -11,7 +12,7 @@ const Map: React.FC = () => {
       styles['map'],
       styles['grid__element']
     )}>
-      <Resize/>
+      <Resize isFullScreen={false} onClick={() => {}}/>
       <Title/>
       <LeafletMap/>
     </div>
