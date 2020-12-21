@@ -4,32 +4,25 @@ import React from 'react';
 import Chart from '@/components/Chart';
 import Info from '@/components/Info';
 import List from '@/components/List';
+import Map from '@/components/Map';
+import Table from '@/components/Table';
 
-const Main: React.FC = () => {
-  return (
-    <main className={styles['main']}>
-      <div className={classNames(
-        styles['main__wrapper'],
-        styles['grid']
-<<<<<<< HEAD
-      )}
-      >
-        <List countriesInfo={countriesInfo} />
-        <Map />
-        <Info />
-        <Table />
-        <Chart />
-=======
-      )}>
-        <List/>
-        <Map/>
-        <Info/>
-        <Table/>
-        <Chart/>
->>>>>>> 23ede6a42c7b3b8be858ebe5f9ab8ffd6fdafece
-      </div>
-    </main>
-  );
-};
+import styles from './Main.scss';
+
+const Main: React.FC = () => (
+  <main className={styles['main']}>
+    <div className={classNames(
+      styles['main__wrapper'],
+      styles['grid']
+    )}
+    >
+      <List />
+      <Map />
+      <Info />
+      <Table />
+      <Chart />
+    </div>
+  </main>
+);
 
 export default Main;

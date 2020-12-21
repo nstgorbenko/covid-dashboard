@@ -30,26 +30,20 @@ const ActionCreator = {
   changeActiveScreen: (screen: Screen) => ({
     type: ActionType.CHANGE_ACTIVE_SCREEN,
     payload: screen,
-  })
+  }),
 };
 
 const reducer = (state = initialState, action: ActionInterface) => {
   switch (action.type) {
     case ActionType.CHANGE_COUNTRY:
-      return Object.assign({}, state, {
-        country: action.payload,
-      });
+      return { ...state, country: action.payload };
     case ActionType.CHANGE_PARAMETER:
-      return Object.assign({}, state, {
-        parameter: action.payload,
-      });
+      return { ...state, parameter: action.payload };
     case ActionType.CHANGE_ACTIVE_SCREEN:
-      return Object.assign({}, state, {
-        activeScreen: action.payload,
-      });
+      return { ...state, activeScreen: action.payload };
     default:
       return state;
   }
 };
 
-export {ActionCreator, ActionType, reducer};
+export { ActionCreator, ActionType, reducer };

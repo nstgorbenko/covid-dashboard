@@ -1,23 +1,17 @@
-import React, {useState} from 'react';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import ListItem from '@/components/ListItem';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
-<<<<<<< HEAD
-import { CountryInfo } from '@/types/entities';
-=======
-import ListItem from '@/components/ListItem';
-import {connect} from "react-redux";
-import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector';
-import { ActionCreator } from '@/store/app/app';
 import { Parameter, Screen } from '@/constants/constants';
-import { CountryDataInterface, StateInterface } from '@/types/entities';
-import { Dispatch } from 'redux';
+import { ActionCreator } from '@/store/app/app';
+import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector';
 import { getCountriesData } from '@/store/data/selector';
+import { CountryDataInterface, StateInterface } from '@/types/entities';
 import { getShownCountriesData } from '@/utils/countries-data';
->>>>>>> 23ede6a42c7b3b8be858ebe5f9ab8ffd6fdafece
 
 import styles from './List.scss';
 
@@ -31,7 +25,9 @@ interface ListProps {
 }
 
 const List: React.FC<ListProps> = (props: ListProps) => {
-  const { fullScreen, country, parameter, countriesData, changeCountry, changeActiveScreen } = props;
+  const {
+    fullScreen, country, parameter, countriesData, changeCountry, changeActiveScreen,
+  } = props;
   const shownCountriesData = getShownCountriesData(countriesData, parameter);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -51,30 +47,18 @@ const List: React.FC<ListProps> = (props: ListProps) => {
   }
 
   return (
-<<<<<<< HEAD
-    <div className={classNames(
-      styles['list'],
-      styles['grid__element']
-    )}
-    >
-      <Resize />
+    <div className={listClass}>
+      <Resize isFullScreen={isFullScreen} onClick={changeScreenView} />
       <Title />
       <ul className={styles['list__items']}>
-        {countriesInfo.map(countryInfo => <ListItem key={countryInfo.name} countryInfo={countryInfo} />)}
-=======
-    <div className={listClass}>
-      <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
-      <Title/>
-      <ul className={styles['list__items']}>
-        {shownCountriesData.map((countryData) =>
+        {shownCountriesData.map(countryData => (
           <ListItem
             key={countryData.country}
             countryData={countryData}
             activeCountry={country}
             onCountryClick={changeCountry}
           />
-        )}
->>>>>>> 23ede6a42c7b3b8be858ebe5f9ab8ffd6fdafece
+        ))}
       </ul>
     </div>
   );

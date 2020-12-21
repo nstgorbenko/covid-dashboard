@@ -14,12 +14,12 @@ const getData = (countriesData: Array<CountryDataInterface>, parameter: string, 
     return countryData[parameter];
   };
 
-  return [...countriesData].map((countryData) => ({
+  return [...countriesData].map(countryData => ({
     country: countryData.country,
     countryInfo: countryData.countryInfo,
     count: getCount(countryData, parameter),
   }))
-  .sort((a, b) => b.count - a.count);
+    .sort((a, b) => b.count - a.count);
 };
 
 export const getShownCountriesData = (countriesData: Array<CountryDataInterface>, parameter: Parameter): Array<ShownCountryInterface> => {

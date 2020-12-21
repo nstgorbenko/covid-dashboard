@@ -21,8 +21,8 @@ const Resize: React.FC<ResizeProps> = (props: ResizeProps) => {
       onClick={onClick}
     >
       <svg className={styles['resize__icon']}>
-        <use className={styles['resize__icon--expand']} xlinkHref="#icon-expand"></use>
-        <use className={styles['resize__icon--collapse']} xlinkHref="#icon-collapse"></use>
+        <use className={styles['resize__icon--expand']} xlinkHref="#icon-expand" />
+        <use className={styles['resize__icon--collapse']} xlinkHref="#icon-collapse" />
       </svg>
     </div>
   );
