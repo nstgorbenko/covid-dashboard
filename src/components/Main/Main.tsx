@@ -4,24 +4,14 @@ import React from 'react';
 import Chart from '@/components/Chart';
 import Info from '@/components/Info';
 import List from '@/components/List';
-import Map from '@/components/Map';
-import Table from '@/components/Table';
-import { CountryInfo } from '@/types/entities';
 
-import styles from './Main.scss';
-
-interface MainProps {
-  countriesInfo: Array<CountryInfo>;
-}
-
-const Main: React.FC<MainProps> = (props: MainProps) => {
-  const { countriesInfo } = props;
-
+const Main: React.FC = () => {
   return (
     <main className={styles['main']}>
       <div className={classNames(
         styles['main__wrapper'],
         styles['grid']
+<<<<<<< HEAD
       )}
       >
         <List countriesInfo={countriesInfo} />
@@ -29,6 +19,14 @@ const Main: React.FC<MainProps> = (props: MainProps) => {
         <Info />
         <Table />
         <Chart />
+=======
+      )}>
+        <List/>
+        <Map/>
+        <Info/>
+        <Table/>
+        <Chart/>
+>>>>>>> 23ede6a42c7b3b8be858ebe5f9ab8ffd6fdafece
       </div>
     </main>
   );

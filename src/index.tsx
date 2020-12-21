@@ -1,20 +1,38 @@
 import '@/assets/stylesheets/index.scss';
 
+import {applyMiddleware, createStore} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
+
 import React from 'react';
-import { CookiesProvider } from 'react-cookie';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-
+// import data from '@/markup/data';
 import App from '@/App';
-import data from '@/markup/data';
+import reducer from '@/store/reducer';
+import api from '@/api';
+import { Operation } from '@/store/data/data';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <CookiesProvider>
-        <App countriesInfo={data} />
-      </CookiesProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+const store = createStore(
+  reducer,
+  composeWithDevTools(
+      applyMiddleware(thunk.withExtraArgument(api)))
 );
+
+const init = () => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App/>
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+};
+
+store.dispatch(Operation.loadGlobalData())
+  .then(() => store.dispatch(Operation.loadCountriesData()))
+  .then(() => init());
