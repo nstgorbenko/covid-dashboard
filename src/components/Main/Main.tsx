@@ -6,22 +6,15 @@ import Map from '@/components/Map';
 import Info from '@/components/Info';
 import Table from '@/components/Table';
 import List from '@/components/List';
-import { CountryInfo } from '@/types/entities';
 
-interface MainProps {
-  countriesInfo: Array<CountryInfo>;
-}
-
-const Main: React.FC<MainProps> = (props: MainProps) => {
-  const { countriesInfo } = props;
-
+const Main: React.FC = () => {
   return (
     <main className={styles['main']}>
       <div className={classNames(
         styles['main__wrapper'],
         styles['grid']
       )}>
-        <List countriesInfo={countriesInfo}/>
+        <List/>
         <Map/>
         <Info/>
         <Table/>
