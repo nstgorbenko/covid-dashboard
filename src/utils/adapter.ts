@@ -1,5 +1,7 @@
 import { ServerGlobalInterface, ServerCountryInterface } from '@/types/entities';
 
+const EXCLUDED_COUNTRIES = ['Diamond Princess', 'MS Zaandam'];
+
 export const adaptGlobalData = (data: ServerGlobalInterface) => ({
   updated: data.updated,
   cases: data.cases,
@@ -28,5 +30,6 @@ const adaptCountryData = (data: ServerCountryInterface) => ({
   },
 });
 
-export const adaptCountriesData = (data: Array<ServerCountryInterface>) =>
-  data.map((countryData) => adaptCountryData(countryData));
+export const adaptCountriesData = (data: Array<ServerCountryInterface>) => data
+  .map((countryData) => adaptCountryData(countryData))
+  .filter(({ country }) => EXCLUDED_COUNTRIES.indexOf(country) === -1);

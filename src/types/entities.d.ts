@@ -37,12 +37,6 @@ interface ServerGlobalExtraData {
   affectedCountries: number;
 }
 
-export interface CountryInfo {
-  name: string;
-  id: string;
-  count: number;
-}
-
 export interface GlobalDataInterface {
   updated: number;
   cases: number;
@@ -74,4 +68,8 @@ export interface DataStateInterface {
 export interface StateInterface {
   APP: AppStateInterface;
   DATA: DataStateInterface;
+}
+
+export interface ShownCountryInterface extends CountryData {
+  count: number;
 }
