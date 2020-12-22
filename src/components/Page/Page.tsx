@@ -3,19 +3,12 @@ import styles from './Page.scss';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
 import Footer from '@/components/Footer';
-import { CountryInfo } from '@/types/entities';
 
-interface PageProps {
-  countriesInfo: Array<CountryInfo>;
-}
-
-const Page: React.FC<PageProps> = (props: PageProps) => {
-  const { countriesInfo } = props;
-
+const Page: React.FC = () => {
   return (
     <div className={styles['page']}>
       <Header/>
-      <Main countriesInfo={countriesInfo}/>
+      <Main/>
       <Footer/>
     </div>
   );

@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import styles from './Chart.scss';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
+import { Screen } from '@/constants/constants';
 
 const Chart: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const Chart: React.FC = () => {
       styles['chart'],
       styles['grid__element']
     )}>
-      <Resize/>
+      <Resize isFullScreen={false} onClick={() => {}}/>
       <Title/>
     </div>
   );
