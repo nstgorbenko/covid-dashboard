@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
 
-import { AppContext } from '../../App';
+// import { AppContext } from '../../App';
 
 import styles from './Search.scss';
 
@@ -19,7 +19,7 @@ interface IPost {
 const defaultPosts: IPost[] = [];
 
 const Search: React.SFC = () => {
-  const { country, updateCountry } = React.useContext(AppContext);
+  // const { country, updateCountry } = React.useContext(AppContext);
 
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(defaultPosts);
 
@@ -30,7 +30,8 @@ const Search: React.SFC = () => {
   const [error, setError] = React.useState<string>('');
 
   const [info, setInfo] = React.useState<IPost>({
-    country,
+    // country,
+    country: '',
     cases: 0,
     todayCases: 0,
     deaths: 0,
@@ -40,7 +41,7 @@ const Search: React.SFC = () => {
     countryInfo: { flag: '' },
   });
 
-  const [currentCountry, setCurrentCountry]: [string, (error: string) => void] = React.useState('');
+  const [country, setCountry]: [string, (error: string) => void] = React.useState('');
 
   React.useEffect(() => {
     axios
@@ -74,12 +75,23 @@ const Search: React.SFC = () => {
   return (
     <div className={styles['search']}>
       {loading && <p>...Loading</p>}
-      <input
-        className={styles['search__bar']}
-        type="text"
-        placeholder="Search"
-        onChange={e => setCountry(e.target.value)}
-      />
+      <div className={styles['search__input-container']}>
+        <input
+          className={styles['search__bar']}
+          type="text"
+          placeholder="Search"
+          onChange={e => setCountry(e.target.value)}
+        />
+        <select size={3} className={styles['select']}>
+        {posts
+          .filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
+          .map(c => (
+            <option key={c.country} onClick={() => handleSelectedCountry(c.country)}>
+              {c.country}
+            </option>
+          ))}
+        </select>
+      </div>
       <span className={styles['search__reset']}>
         <svg className={styles['search__reset-icon']} width="36" height="36">
           <use xlinkHref="#icon-search-reset" />
@@ -91,17 +103,7 @@ const Search: React.SFC = () => {
         </svg>
       </span>
 
-      <select size={3} className={styles['select']}>
-        {posts
-          .filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
-          .map(c => (
-            <option key={c.country} onClick={() => handleSelectedCountry(c.country)}>
-              {c.country}
-            </option>
-          ))}
-      </select>
-
-      <div key={info.country}>
+      {/* <div key={info.country}>
         <p>
           Country :
           {info.country}
@@ -132,7 +134,7 @@ const Search: React.SFC = () => {
         </p>
         <img src={info.countryInfo.flag} alt="Flag" />
         <br />
-      </div>
+      </div> */}
 
       {error && <p>{error}</p>}
     </div>

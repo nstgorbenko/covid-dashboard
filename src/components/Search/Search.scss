@@ -6,6 +6,11 @@
   align-items: center;
 }
 
+.search__input-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .search__bar {
   width: 277.55px;
   height: 40px;
@@ -64,4 +69,15 @@
   .search__keyboard:hover & {
     fill: $main-color--lightest;
   }
+}
+
+.select {
+  background-color: #161b22;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  font-size: 12px;
+  position: absolute;
+  top: 39px;
+  z-index: 1;
+  width: 278px;
 }
