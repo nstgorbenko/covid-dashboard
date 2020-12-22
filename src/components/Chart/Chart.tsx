@@ -12,7 +12,7 @@ const Chart: React.FC = () => {
       styles['grid__element']
     )}>
       <Resize isFullScreen={false} onClick={() => {}}/>
-      <Title/>
+      <Title screen={Screen.CHART}/>
     </div>
   );
 };

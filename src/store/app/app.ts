@@ -19,21 +19,21 @@ const ActionType = {
 };
 
 const ActionCreator = {
-  changeCountry: (country: string) => ({
+  changeCountry: (country: string): ActionInterface => ({
     type: ActionType.CHANGE_COUNTRY,
     payload: country,
   }),
-  changeParameter: (parameter: Parameter) => ({
+  changeParameter: (parameter: Parameter): ActionInterface => ({
     type: ActionType.CHANGE_PARAMETER,
     payload: parameter,
   }),
-  changeActiveScreen: (screen: Screen) => ({
+  changeActiveScreen: (screen: Screen): ActionInterface => ({
     type: ActionType.CHANGE_ACTIVE_SCREEN,
     payload: screen,
   })
 };
 
-const reducer = (state = initialState, action: ActionInterface) => {
+const reducer = (state = initialState, action: ActionInterface): AppStateInterface => {
   switch (action.type) {
     case ActionType.CHANGE_COUNTRY:
       return Object.assign({}, state, {
