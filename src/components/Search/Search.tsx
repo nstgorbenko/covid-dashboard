@@ -1,9 +1,22 @@
 import axios from 'axios';
-import React, { useContext } from 'react';
-
-// import { AppContext } from '../../App';
-
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import styles from './Search.scss';
+
+import { Parameter, Screen } from '@/constants/constants';
+import { ActionCreator } from '@/store/app/app';
+import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
+import { getCountriesData } from '@/store/data/selector';
+import { CountryDataInterface, StateInterface } from '@/types/entities';
+
+interface ListProps {
+  fullScreen: Screen;
+  country: string;
+  parameter: Parameter;
+  countriesData: Array<CountryDataInterface>;
+  changeCountry(country: string): void;
+}
 
 interface IPost {
   country: string;
@@ -18,19 +31,13 @@ interface IPost {
 
 const defaultPosts: IPost[] = [];
 
-const Search: React.SFC = () => {
-  // const { country, updateCountry } = React.useContext(AppContext);
-
+const Search: React.FC<ListProps> = (props: ListProps) => {
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(defaultPosts);
-
   const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(
     true
   );
-
   const [error, setError] = React.useState<string>('');
-
   const [info, setInfo] = React.useState<IPost>({
-    // country,
     country: '',
     cases: 0,
     todayCases: 0,
@@ -40,7 +47,6 @@ const Search: React.SFC = () => {
     todayRecovered: 0,
     countryInfo: { flag: '' },
   });
-
   const [country, setCountry]: [string, (error: string) => void] = React.useState('');
 
   React.useEffect(() => {
@@ -48,7 +54,6 @@ const Search: React.SFC = () => {
       .get<IPost[]>('https://disease.sh/v3/covid-19/countries')
       .then(response => {
         setPosts(response.data);
-        console.log(response.data);
         setLoading(false);
       })
       .catch(ex => {
@@ -70,7 +75,6 @@ const Search: React.SFC = () => {
     );
   };
 
-  console.log(info.country);
 
   return (
     <div className={styles['search']}>
@@ -81,15 +85,20 @@ const Search: React.SFC = () => {
           type="text"
           placeholder="Search"
           onChange={e => setCountry(e.target.value)}
+          // onFocus={document.querySelector('')}
         />
+        {/* isFocus true? --> Один класс isFocus false --> Другой */}
         <select size={3} className={styles['select']}>
-        {posts
-          .filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
-          .map(c => (
-            <option key={c.country} onClick={() => handleSelectedCountry(c.country)}>
-              {c.country}
-            </option>
-          ))}
+          {posts
+            .filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
+            .map(c => (
+              <option key={c.country} onClick={() => {
+                props.changeCountry(info.country);
+                handleSelectedCountry(c.country);
+              }}>
+                {c.country}
+              </option>
+            ))}
         </select>
       </div>
       <span className={styles['search__reset']}>
@@ -102,63 +111,22 @@ const Search: React.SFC = () => {
           <use xlinkHref="#icon-keyboard" />
         </svg>
       </span>
-
-      {/* <div key={info.country}>
-        <p>
-          Country :
-          {info.country}
-        </p>
-        <p>
-          Cases:
-          {info.cases}
-        </p>
-        <p>
-          Today cases:
-          {info.todayCases}
-        </p>
-        <p>
-          Deaths:
-          {info.deaths}
-        </p>
-        <p>
-          Today deaths:
-          {info.todayDeaths}
-        </p>
-        <p>
-          Recovered:
-          {info.recovered}
-        </p>
-        <p>
-          Today recovered:
-          {info.todayRecovered}
-        </p>
-        <img src={info.countryInfo.flag} alt="Flag" />
-        <br />
-      </div> */}
-
       {error && <p>{error}</p>}
     </div>
   );
 };
 
-export default Search;
+const mapStateToProps = (state: StateInterface) => ({
+  fullScreen: getActiveScreen(state),
+  country: getCountry(state),
+  parameter: getParameter(state),
+  countriesData: getCountriesData(state),
+});
 
-// const Search: React.FC = () => {
-//   return (
-//     <div className={styles['search']}>
-//       <input className={styles['search__bar']} type="text" placeholder="Search"/>
-//       <span className={styles['search__reset']}>
-//         <svg className={styles['search__reset-icon']} width="36" height="36">
-//           <use xlinkHref="#icon-search-reset"></use>
-//         </svg>
-//       </span>
-//       <span className={styles['search__keyboard']}>
-//         <svg className={styles['search__keyboard-icon']}>
-//           <use xlinkHref="#icon-keyboard"></use>
-//         </svg>
-//       </span>
-//     </div>
-//   );
-// };
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  changeCountry(country: string) {
+    dispatch(ActionCreator.changeCountry(country));
+  },
+});
 
-// export default Search;
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
