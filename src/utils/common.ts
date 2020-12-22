@@ -23,8 +23,8 @@ export const getPreviousThirdItem = <T>(array: Array<T>, currentItem: T): T => {
   const DIVISOR = 3;
   const currentItemIndex = array.indexOf(currentItem);
   const nextIndex = Math.trunc(currentItemIndex / DIVISOR) * DIVISOR - DIVISOR;
-  if (nextIndex <= 0) {
-    return array[array.length - 1];
+  if (nextIndex < 0) {
+    return array[array.length - DIVISOR];
   }
   return array[nextIndex];
 };
