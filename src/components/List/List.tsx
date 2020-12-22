@@ -11,7 +11,7 @@ import { Parameter, Screen } from '@/constants/constants';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
 import { Dispatch } from 'redux';
 import { getCountriesData } from '@/store/data/selector';
-import { getShownCountriesData } from '@/utils/countries-data';
+import getShownCountriesData from '@/utils/countries-data';
 
 interface ListProps {
   fullScreen: Screen;

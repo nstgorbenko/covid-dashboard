@@ -1,11 +1,27 @@
 import React from 'react';
+import {connect} from "react-redux";
 import classNames from 'classnames';
 import styles from './Table.scss';
+import TableRow from '@/components/TableRow';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
-import { Screen } from '@/constants/constants';
+import { Parameter } from '@/constants/constants';
+import { getGlobalData, getCountriesData } from '@/store/data/selector';
+import { getCountry, getParameter } from '@/store/app/selector';
+import { CountryDataInterface, StateInterface, GlobalDataInterface } from '@/types/entities';
+import getShownTableData from '@/utils/table-data';
 
-const Table: React.FC = () => {
+interface TableProps {
+  country: string;
+  parameter: Parameter;
+  countriesData: Array<CountryDataInterface>;
+  globalData: GlobalDataInterface;
+}
+
+const Table: React.FC<TableProps> = (props: TableProps) => {
+  const { country, parameter, countriesData, globalData } = props;
+  const shownData = getShownTableData(globalData, countriesData, country, parameter);
+
   return (
     <div className={classNames(
       styles['table'],
@@ -15,25 +31,23 @@ const Table: React.FC = () => {
       <Title/>
       <table className={styles['table__content']}>
         <tbody>
-          <tr className={classNames(
-            styles['table__row'],
-            styles['table__row--active']
-          )}>
-            <th className={styles['table__title']}>Confirmed</th>
-            <td className={styles['table__info']}>496 156</td>
-          </tr>
-          <tr className={styles['table__row']}>
-            <th className={styles['table__title']}>Deaths</th>
-            <td className={styles['table__info']}>8 443</td>
-          </tr>
-          <tr className={styles['table__row']}>
-            <th className={styles['table__title']}>Recovered</th>
-            <td className={styles['table__info']}>245 021 </td>
-          </tr>
+          {shownData.map((data) =>
+            <TableRow
+              key={data.name}
+              data={data}
+            />
+          )}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default Table;
+const mapStateToProps = (state: StateInterface) => ({
+  country: getCountry(state),
+  parameter: getParameter(state),
+  countriesData: getCountriesData(state),
+  globalData: getGlobalData(state),
+});
+
+export default connect(mapStateToProps)(Table);

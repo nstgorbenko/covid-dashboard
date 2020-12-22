@@ -16,28 +16,3 @@
   width: calc(100% - 10px);
   margin: 0 auto;
 }
-
-.table__title {
-  padding: 5px;
-  text-align: left;
-  font-weight: normal;
-  border: 1px solid $main-color;
-}
-
-.table__info {
-  padding: 5px;
-  font-weight: bold;
-  color: $green;
-  border: 1px solid $main-color;
-}
-
-.table__row {
-  &--active {
-    background-color: $main-color--light;
-  }
-
-  &:not(.table__row--active):hover {
-    background-color: $main-color--dark;
-    cursor: pointer;
-  }
-}

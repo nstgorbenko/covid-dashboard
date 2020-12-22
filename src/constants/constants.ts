@@ -1,3 +1,8 @@
+export enum DataCount {
+  TOTAL = 'total',
+  PER_100 = 'per-100'
+}
+
 export enum Parameter {
   CONFIRMED = 'confirmed',
   DEATHS = 'deaths',
@@ -11,6 +16,15 @@ export enum Parameter {
   DAY_CONFIRMED_PER_100 = 'day-confirmed-per-100',
   DAY_DEATHS_PER_100 = 'day-deaths-per-100',
   DAY_RECOVERED_PER_100 = 'day-recovered-per-100',
+}
+
+export enum DataValue {
+  CASES = 'cases',
+  DEATHS = 'deaths',
+  RECOVERED = 'recovered',
+  TODAY_CASES = 'todayCases',
+  TODAY_DEATHS = 'todayDeaths',
+  TODAY_RECOVERED = 'todayRecovered',
 }
 
 export enum Screen {
