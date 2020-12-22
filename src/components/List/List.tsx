@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import classNames from 'classnames';
+import React, { useState } from 'react';
 import styles from './List.scss';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
@@ -11,7 +10,8 @@ import { Parameter, Screen } from '@/constants/constants';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
 import { Dispatch } from 'redux';
 import { getCountriesData } from '@/store/data/selector';
-import { getShownCountriesData } from '@/utils/countries-data';
+import getShownCountriesData from '@/utils/countries-data';
+import { getScreenComponentClass } from '@/utils/common';
 
 interface ListProps {
   fullScreen: Screen;
@@ -25,27 +25,18 @@ interface ListProps {
 const List: React.FC<ListProps> = (props: ListProps) => {
   const { fullScreen, country, parameter, countriesData, changeCountry, changeActiveScreen } = props;
   const shownCountriesData = getShownCountriesData(countriesData, parameter);
+  const screenName = Screen.LIST;
 
   const [isFullScreen, setIsFullScreen] = useState(false);
-
   const changeScreenView = () => {
-    isFullScreen ? changeActiveScreen(Screen.ALL) : changeActiveScreen(Screen.LIST);
+    isFullScreen ? changeActiveScreen(Screen.ALL) : changeActiveScreen(screenName);
     setIsFullScreen(prev => !prev);
   };
 
-  let listClass = '';
-  if (isFullScreen) {
-    listClass = classNames(styles['list'], styles['grid__element'], styles['grid__element--show']);
-  } else if (!isFullScreen && fullScreen !== Screen.ALL) {
-    listClass = classNames(styles['list'], styles['grid__element'], styles['grid__element--hide']);
-  } else {
-    listClass = classNames(styles['list'], styles['grid__element']);
-  }
-
   return (
-    <div className={listClass}>
+    <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
       <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
-      <Title/>
+      <Title screen={screenName}/>
       <ul className={styles['list__items']}>
         {shownCountriesData.map((countryData) =>
           <ListItem

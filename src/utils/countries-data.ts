@@ -1,52 +1,51 @@
-import { Parameter } from '@/constants/constants';
+import { DataCount, DataValue, Parameter } from '@/constants/constants';
 import { CountryDataInterface, ShownCountryInterface } from '@/types/entities';
 
-enum DataCount {
-  TOTAL = 'total',
-  PER_100 = 'per-100'
-}
-
-const getData = (countriesData: Array<CountryDataInterface>, parameter: string, count: DataCount = DataCount.TOTAL) => {
-  const getCount = (countryData: CountryDataInterface, parameter: string) => {
+const getData = (countriesData: Array<CountryDataInterface>, value: DataValue, count: DataCount = DataCount.TOTAL): Array<ShownCountryInterface> => {
+  const getCount = (countryData: CountryDataInterface, option: string) => {
     if (count === DataCount.PER_100) {
-      return Math.trunc(countryData[parameter] / countryData.population * 100000);
+      return Math.trunc(countryData[option] / countryData.population * 100000);
     }
-    return countryData[parameter];
+    return countryData[option];
   };
 
   return [...countriesData].map((countryData) => ({
     country: countryData.country,
     countryInfo: countryData.countryInfo,
-    count: getCount(countryData, parameter),
+    count: getCount(countryData, value),
   }))
   .sort((a, b) => b.count - a.count);
 };
 
-export const getShownCountriesData = (countriesData: Array<CountryDataInterface>, parameter: Parameter): Array<ShownCountryInterface> => {
-  switch (parameter) {
+const getShownCountriesData = (countriesData: Array<CountryDataInterface>, value: Parameter): Array<ShownCountryInterface> => {
+  switch (value) {
     case Parameter.CONFIRMED:
-      return getData(countriesData, 'cases');
+      return getData(countriesData, DataValue.CASES);
     case Parameter.DEATHS:
-      return getData(countriesData, 'deaths');
+      return getData(countriesData, DataValue.DEATHS);
     case Parameter.RECOVERED:
-      return getData(countriesData, 'recovered');
+      return getData(countriesData, DataValue.RECOVERED);
     case Parameter.DAY_CONFIRMED:
-      return getData(countriesData, 'todayCases');
+      return getData(countriesData, DataValue.TODAY_CASES);
     case Parameter.DAY_DEATHS:
-      return getData(countriesData, 'todayDeaths');
+      return getData(countriesData, DataValue.TODAY_DEATHS);
     case Parameter.DAY_RECOVERED:
-      return getData(countriesData, 'todayRecovered');
+      return getData(countriesData, DataValue.TODAY_RECOVERED);
     case Parameter.CONFIRMED_PER_100:
-      return getData(countriesData, 'cases', DataCount.PER_100);
+      return getData(countriesData, DataValue.CASES, DataCount.PER_100);
     case Parameter.DEATHS_PER_100:
-      return getData(countriesData, 'deaths', DataCount.PER_100);
+      return getData(countriesData, DataValue.DEATHS, DataCount.PER_100);
     case Parameter.RECOVERED_PER_100:
-      return getData(countriesData, 'recovered', DataCount.PER_100);
+      return getData(countriesData, DataValue.RECOVERED, DataCount.PER_100);
     case Parameter.DAY_CONFIRMED_PER_100:
-      return getData(countriesData, 'todayCases', DataCount.PER_100);
+      return getData(countriesData, DataValue.TODAY_CASES, DataCount.PER_100);
     case Parameter.DAY_DEATHS_PER_100:
-      return getData(countriesData, 'todayDeaths', DataCount.PER_100);
+      return getData(countriesData, DataValue.TODAY_DEATHS, DataCount.PER_100);
     case Parameter.DAY_RECOVERED_PER_100:
-      return getData(countriesData, 'todayRecovered', DataCount.PER_100);
+      return getData(countriesData, DataValue.TODAY_RECOVERED, DataCount.PER_100);
+    default:
+      throw new Error(`Unknown parameter: ${value}`);
   }
 };
+
+export default getShownCountriesData;
