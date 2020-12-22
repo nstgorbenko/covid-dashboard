@@ -45,7 +45,7 @@ const List: React.FC<ListProps> = (props: ListProps) => {
   return (
     <div className={listClass}>
       <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
-      <Title/>
+      <Title screen={Screen.LIST}/>
       <ul className={styles['list__items']}>
         {shownCountriesData.map((countryData) =>
           <ListItem

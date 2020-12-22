@@ -5,17 +5,20 @@ import styles from './Title.scss';
 import { StateInterface } from '@/types/entities';
 import { getParameter } from '@/store/app/selector';
 import { Dispatch } from 'redux';
-import { Parameter, parameterToTitle, PARAMETERS_LIST } from '@/constants/constants';
+import { Parameter, parameterToTitle, parameterToTableTitle, PARAMETERS_LIST } from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
 import { getNextArrayItem, getPreviousArrayItem } from '@/utils/common';
+import { Screen } from '@/constants/constants';
 
 interface TitleProps {
+  screen: Screen;
   parameter: Parameter;
   changeParameter(parameter: Parameter): void;
 }
 
 const Title: React.FC<TitleProps> = (props: TitleProps) => {
-  const { parameter, changeParameter } = props;
+  const { parameter, screen, changeParameter } = props;
+  const title = screen !== Screen.TABLE ? parameterToTitle[parameter] : parameterToTableTitle[parameter];
 
   return (
     <div className={styles['title']}>
@@ -25,7 +28,7 @@ const Title: React.FC<TitleProps> = (props: TitleProps) => {
       )}
       onClick={() => (changeParameter(getPreviousArrayItem(PARAMETERS_LIST, parameter) as Parameter))}>
       </p>
-      <p className={styles['title__text']}>{parameterToTitle[parameter]}</p>
+      <p className={styles['title__text']}>{title}</p>
       <p className={classNames(
         styles['title__arrow'],
         styles['title__arrow--right']

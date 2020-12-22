@@ -10,6 +10,7 @@ import { getGlobalData, getCountriesData } from '@/store/data/selector';
 import { getCountry, getParameter } from '@/store/app/selector';
 import { CountryDataInterface, StateInterface, GlobalDataInterface } from '@/types/entities';
 import getShownTableData from '@/utils/table-data';
+import { Screen } from '@/constants/constants';
 
 interface TableProps {
   country: string;
@@ -28,7 +29,7 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
       styles['grid__element']
     )}>
       <Resize isFullScreen={false} onClick={() => {}}/>
-      <Title/>
+      <Title screen={Screen.TABLE}/>
       <table className={styles['table__content']}>
         <tbody>
           {shownData.map((data) =>

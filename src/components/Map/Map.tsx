@@ -13,7 +13,7 @@ const Map: React.FC = () => {
       styles['grid__element']
     )}>
       <Resize isFullScreen={false} onClick={() => {}}/>
-      <Title/>
+      <Title screen={Screen.MAP}/>
       <LeafletMap/>
     </div>
   );
