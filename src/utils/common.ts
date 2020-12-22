@@ -19,6 +19,26 @@ export const getPreviousArrayItem = <T>(array: Array<T>, currentItem: T): T => {
   return array[currentItemIndex - 1];
 };
 
+export const getPreviousThirdItem = <T>(array: Array<T>, currentItem: T): T => {
+  const DIVISOR = 3;
+  const currentItemIndex = array.indexOf(currentItem);
+  const nextIndex = Math.trunc(currentItemIndex / DIVISOR) * DIVISOR - DIVISOR;
+  if (nextIndex <= 0) {
+    return array[array.length - 1];
+  }
+  return array[nextIndex];
+};
+
+export const getNextThirdItem = <T>(array: Array<T>, currentItem: T): T => {
+  const DIVISOR = 3;
+  const currentItemIndex = array.indexOf(currentItem);
+  const nextIndex = Math.trunc(currentItemIndex / DIVISOR) * DIVISOR + DIVISOR;
+  if (nextIndex >= array.length - 1) {
+    return array[0];
+  }
+  return array[nextIndex];
+};
+
 export const getScreenComponentClass = (
   screenComponentName: Screen,
   isFullScreenComponent: boolean,
