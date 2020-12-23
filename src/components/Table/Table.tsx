@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import {connect} from "react-redux";
-import styles from './Table.scss';
-import TableRow from '@/components/TableRow';
+
 import Resize from '@/components/Resize';
+import TableRow from '@/components/TableRow';
 import Title from '@/components/Title';
-import { Parameter } from '@/constants/constants';
-import { getGlobalData, getCountriesData } from '@/store/data/selector';
-import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
-import { CountryDataInterface, StateInterface, GlobalDataInterface } from '@/types/entities';
-import getShownTableData from '@/utils/table-data';
-import { Screen } from '@/constants/constants';
-import { getScreenComponentClass } from '@/utils/common';
+import { Parameter, Screen } from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
+import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
+import { getGlobalData, getCountriesData } from '@/store/data/selector';
+import { CountryDataInterface, StateInterface, GlobalDataInterface } from '@/types/entities';
+import { getScreenComponentClass } from '@/utils/common';
+import getShownTableData from '@/utils/table-data';
+
+import styles from './Table.scss';
 
 interface TableProps {
   fullScreen: Screen;
@@ -24,7 +25,9 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = (props: TableProps) => {
-  const { fullScreen, country, parameter, countriesData, globalData, changeActiveScreen } = props;
+  const {
+    fullScreen, country, parameter, countriesData, globalData, changeActiveScreen,
+  } = props;
   const shownData = getShownTableData(globalData, countriesData, country, parameter);
   const screenName = Screen.TABLE;
 
@@ -36,16 +39,16 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
 
   return (
     <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
-      <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
-      <Title screen={screenName}/>
+      <Resize isFullScreen={isFullScreen} onClick={changeScreenView} />
+      <Title screen={screenName} />
       <table className={styles['table__content']}>
         <tbody>
-          {shownData.map((data) =>
+          {shownData.map(data => (
             <TableRow
               key={data.name}
               data={data}
             />
-          )}
+          ))}
         </tbody>
       </table>
     </div>

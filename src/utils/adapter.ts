@@ -32,7 +32,7 @@ const adaptCountryData = (data: ServerCountryInterface) => ({
 });
 
 export const adaptCountriesData = (data: Array<ServerCountryInterface>) => data
-  .map((countryData) => adaptCountryData(countryData))
+  .map(countryData => adaptCountryData(countryData))
   .filter(({ country }) => EXCLUDED_COUNTRIES.indexOf(country) === -1);
 
 export const adaptCountryHistoricalData = (data: ServerCountryHistoricalInterface) => data.timeline;
