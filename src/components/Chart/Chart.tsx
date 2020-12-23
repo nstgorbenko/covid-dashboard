@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Dispatch } from 'redux';
 import {connect} from "react-redux";
-import { Line } from 'react-chartjs-2';
 import styles from './Chart.scss';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
@@ -12,7 +11,7 @@ import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector'
 import { ActionCreator } from '@/store/app/app';
 import getShownChartData from '@/utils/chart-data';
 import { getScreenComponentClass } from '@/utils/common';
-import classNames from 'classnames';
+import ChartLine from '../ChartLine';
 
 interface ChartProps {
   fullScreen: Screen;
@@ -40,49 +39,11 @@ const Chart: React.FC<ChartProps> = (props: ChartProps) => {
     setIsFullScreen(prev => !prev);
   };
 
-  const data = {
-    labels: shownData.dates,
-    datasets:[
-      {
-        data: shownData.counts,
-        backgroundColor: '#238636',
-        pointBorderWidth: 1,
-        pointBorderColor: '#238636',
-        pointStyle: 'line',
-      }
-    ]
-  };
-
-  // <div className={classNames(
-  //   styles['grid__element'],
-  //   styles['chart'],
-  //   styles['grid__element--show']
-  //   )}>
-
   return (
     <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
       <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
       <Title screen={screenName}/>
-      <div className={styles['chart__wrapper']}>
-        <Line
-          data={data}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-              display: false
-            },
-            tooltips: {
-              intersect: false,
-              titleFontColor: '#c9d1d9',
-              backgroundColor: '#474f59',
-              titleAlign: 'center',
-              bodyFontColor: '#c9d1d9',
-              displayColors: false,
-            },
-          }}
-        />
-      </div>
+      <ChartLine values={shownData}/>
     </div>
   );
 };

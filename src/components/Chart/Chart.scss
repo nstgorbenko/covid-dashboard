@@ -9,11 +9,10 @@
 
 .chart {
   grid-area: c;
-}
 
-.chart__wrapper {
-  position: relative;
-  width: 100%;
+  @media (max-width: $tablet-width) {
+    min-height: 300px;
+  }
 }
 
 /* разворачивает блок информации на весь экран */

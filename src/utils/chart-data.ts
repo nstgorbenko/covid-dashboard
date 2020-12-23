@@ -7,7 +7,7 @@ const getIncrementData = (data: Array<number>) => {
 
 const getCounts = (casesData: Array<number>, population: number, count: DataCount) => {
   if (count === DataCount.PER_100) {
-    return casesData.map((data) => (data / population * 100000).toFixed(2));
+    return casesData.map((data) => +(data / population * 100000).toFixed(2));
   }
   return casesData;
 };
