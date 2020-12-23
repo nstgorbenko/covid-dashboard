@@ -4,7 +4,7 @@ import { CountryDataInterface, ShownCountryInterface } from '@/types/entities';
 const getData = (countriesData: Array<CountryDataInterface>, value: DataValue, count: DataCount = DataCount.TOTAL): Array<ShownCountryInterface> => {
   const getCount = (countryData: CountryDataInterface, option: string) => {
     if (count === DataCount.PER_100) {
-      return Math.trunc(countryData[option] / countryData.population * 100000);
+      return (countryData[option] / countryData.population * 100000).toFixed(2);
     }
     return countryData[option];
   };
@@ -12,7 +12,7 @@ const getData = (countriesData: Array<CountryDataInterface>, value: DataValue, c
   return [...countriesData].map((countryData) => ({
     country: countryData.country,
     countryInfo: countryData.countryInfo,
-    count: getCount(countryData, value),
+    count: +getCount(countryData, value),
   }))
   .sort((a, b) => b.count - a.count);
 };

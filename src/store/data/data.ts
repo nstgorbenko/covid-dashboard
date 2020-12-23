@@ -1,21 +1,25 @@
-import { adaptGlobalData, adaptCountriesData } from '@/utils/adapter';
-import { GlobalDataInterface, CountryDataInterface, DataStateInterface, StateInterface } from '@/types/entities';
+import { adaptGlobalData, adaptCountriesData, adaptCountryHistoricalData } from '@/utils/adapter';
+import { GlobalDataInterface, HistoricalDataInterface, CountryDataInterface, DataStateInterface, StateInterface } from '@/types/entities';
 import { AxiosInstance } from 'axios';
 import { ThunkAction } from 'redux-thunk';
 
 interface ActionInterface {
   type: string;
-  payload: GlobalDataInterface | Array<CountryDataInterface>;
+  payload: GlobalDataInterface | Array<CountryDataInterface> | HistoricalDataInterface;
 }
 
 const initialState: DataStateInterface = {
-  globalData: [],
+  globalData: {},
   countriesData: [],
+  globalHistoricalData: {},
+  countryHistoricalData: {},
 };
 
 const ActionType = {
   LOAD_GLOBAL_DATA: 'LOAD_GLOBAL_DATA',
   LOAD_COUNTRIES_DATA: 'LOAD_COUNTRIES_DATA',
+  LOAD_GLOBAL_HISTORICAL_DATA: 'LOAD_GLOBAL_HISTORICAL_DATA',
+  LOAD_COUNTRY_HISTORICAL_DATA: 'LOAD_COUNTRY_HISTORICAL_DATA',
 };
 
 const ActionCreator = {
@@ -26,6 +30,14 @@ const ActionCreator = {
   loadCountriesData: (countriesData: Array<CountryDataInterface>) => ({
     type: ActionType.LOAD_COUNTRIES_DATA,
     payload: countriesData,
+  }),
+  loadGlobalHistoricalData: (globalHistoricalData: HistoricalDataInterface) => ({
+    type: ActionType.LOAD_GLOBAL_HISTORICAL_DATA,
+    payload: globalHistoricalData,
+  }),
+  loadCountryHistoricalData: (countryHistoricalData: HistoricalDataInterface) => ({
+    type: ActionType.LOAD_COUNTRY_HISTORICAL_DATA,
+    payload: countryHistoricalData,
   }),
 };
 
@@ -44,6 +56,19 @@ const Operation = {
         dispatch(ActionCreator.loadCountriesData(adaptedCountriesData));
       });
   },
+  loadGlobalHistoricalData: (): ThunkAction<Promise<void>, StateInterface, AxiosInstance, ActionInterface> => (dispatch, getState, api) => {
+    return api.get('/historical/all?lastdays=all')
+      .then(({ data }) => {
+        dispatch(ActionCreator.loadGlobalHistoricalData(data));
+      });
+  },
+  loadCountryHistoricalData: (country: string): ThunkAction<Promise<void>, StateInterface, AxiosInstance, ActionInterface> => (dispatch, getState, api) => {
+    return api.get(`/historical/${country}?lastdays=all`)
+      .then(({ data }) => {
+        const adaptedCountryHistoricalData = adaptCountryHistoricalData(data);
+        dispatch(ActionCreator.loadCountryHistoricalData(adaptedCountryHistoricalData));
+      });
+  },
 };
 
 const reducer = (state = initialState, action: ActionInterface) => {
@@ -55,6 +80,14 @@ const reducer = (state = initialState, action: ActionInterface) => {
     case ActionType.LOAD_COUNTRIES_DATA:
       return Object.assign({}, state, {
         countriesData: action.payload,
+      });
+    case ActionType.LOAD_GLOBAL_HISTORICAL_DATA:
+      return Object.assign({}, state, {
+        globalHistoricalData: action.payload,
+      });
+    case ActionType.LOAD_COUNTRY_HISTORICAL_DATA:
+      return Object.assign({}, state, {
+        countryHistoricalData: action.payload,
       });
     default:
       return state;

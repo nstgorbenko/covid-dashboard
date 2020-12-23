@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-// import data from '@/markup/data';
 import App from '@/App';
 import reducer from '@/store/reducer';
 import api from '@/api';
@@ -35,4 +34,5 @@ const init = () => {
 
 store.dispatch(Operation.loadGlobalData())
   .then(() => store.dispatch(Operation.loadCountriesData()))
+  .then(() => store.dispatch(Operation.loadGlobalHistoricalData()))
   .then(() => init());

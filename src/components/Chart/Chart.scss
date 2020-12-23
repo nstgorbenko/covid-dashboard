@@ -11,6 +11,11 @@
   grid-area: c;
 }
 
+.chart__wrapper {
+  position: relative;
+  width: 100%;
+}
+
 /* разворачивает блок информации на весь экран */
 .grid__element--show {
   position: absolute;

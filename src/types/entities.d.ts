@@ -6,6 +6,7 @@ interface CountryData {
     lat: number,
     long: number,
     flag: string,
+    iso3: string,
   }
 }
 
@@ -37,6 +38,18 @@ interface ServerGlobalExtraData {
   affectedCountries: number;
 }
 
+export interface HistoricalDataInterface {
+  cases: {
+    [key: string]: number
+  };
+  deaths: {
+    [key: string]: number
+  };
+  recovered: {
+    [key: string]: number
+  };
+}
+
 export interface GlobalDataInterface {
   updated: number;
   cases: number;
@@ -63,6 +76,8 @@ export interface AppStateInterface {
 export interface DataStateInterface {
   globalData: GlobalDataInterface | {};
   countriesData: Array<CountryDataInterface> | [];
+  globalHistoricalData: HistoricalDataInterface | {};
+  countryHistoricalData: HistoricalDataInterface | {};
 }
 
 export interface StateInterface {
@@ -78,4 +93,10 @@ export interface ShownTableInterface {
   name: string;
   count: number;
   isActive: boolean;
+}
+
+export interface ServerCountryHistoricalInterface {
+  country: string;
+  province: Array<String>;
+  timeline: HistoricalDataInterface;
 }
