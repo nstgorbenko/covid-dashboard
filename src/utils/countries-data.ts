@@ -9,12 +9,12 @@ const getData = (countriesData: Array<CountryDataInterface>, value: DataValue, c
     return countryData[option];
   };
 
-  return [...countriesData].map((countryData) => ({
+  return [...countriesData].map(countryData => ({
     country: countryData.country,
     countryInfo: countryData.countryInfo,
     count: getCount(countryData, value),
   }))
-  .sort((a, b) => b.count - a.count);
+    .sort((a, b) => b.count - a.count);
 };
 
 const getShownCountriesData = (countriesData: Array<CountryDataInterface>, value: Parameter): Array<ShownCountryInterface> => {

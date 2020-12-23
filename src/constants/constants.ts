@@ -36,9 +36,9 @@ export enum Screen {
 }
 
 export const parameterToTitle = {
-  'confirmed': 'Total confirmed',
-  'deaths': 'Total deaths',
-  'recovered': 'Total recovered',
+  confirmed: 'Total confirmed',
+  deaths: 'Total deaths',
+  recovered: 'Total recovered',
   'confirmed-per-100': 'Confirmed per 100,000 population',
   'deaths-per-100': 'Deaths per 100,000 population',
   'recovered-per-100': 'Recovered per 100,000 population',
@@ -51,9 +51,9 @@ export const parameterToTitle = {
 };
 
 export const parameterToTableTitle = {
-  'confirmed': 'Total cases',
-  'deaths': 'Total cases',
-  'recovered': 'Total cases',
+  confirmed: 'Total cases',
+  deaths: 'Total cases',
+  recovered: 'Total cases',
   'confirmed-per-100': 'Total cases per 100,000 population',
   'deaths-per-100': 'Total cases per 100,000 population',
   'recovered-per-100': 'Total cases per 100,000 population',

@@ -1,24 +1,25 @@
 import { Parameter, Screen } from '@/constants/constants';
 
 interface CountryData {
-  country: string,
+  country: string;
   countryInfo: {
-    lat: number,
-    long: number,
-    flag: string,
-  }
+    lat: number;
+    long: number;
+    flag: string;
+    iso3: string;
+  };
 }
 
 interface ServerCountryData {
-  country: string,
+  country: string;
   countryInfo: {
-    _id: number,
-    iso2: string,
-    iso3: string,
-    lat: number,
-    long: number,
-    flag: string,
-  }
+    _id: number;
+    iso2: string;
+    iso3: string;
+    lat: number;
+    long: number;
+    flag: string;
+  };
 }
 
 interface ServerGlobalExtraData {

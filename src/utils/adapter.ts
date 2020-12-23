@@ -27,9 +27,10 @@ const adaptCountryData = (data: ServerCountryInterface) => ({
     lat: data.countryInfo.lat,
     long: data.countryInfo.long,
     flag: data.countryInfo.flag,
+    iso3: data.countryInfo.iso3,
   },
 });
 
 export const adaptCountriesData = (data: Array<ServerCountryInterface>) => data
-  .map((countryData) => adaptCountryData(countryData))
+  .map(countryData => adaptCountryData(countryData))
   .filter(({ country }) => EXCLUDED_COUNTRIES.indexOf(country) === -1);

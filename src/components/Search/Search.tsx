@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import styles from './Search.scss';
-
 import { Parameter, Screen } from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
 import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
