@@ -6,6 +6,7 @@ interface CountryData {
     lat: number;
     long: number;
     flag: string;
+    iso3: string;
   };
 }
 

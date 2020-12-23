@@ -27,6 +27,7 @@ const adaptCountryData = (data: ServerCountryInterface) => ({
     lat: data.countryInfo.lat,
     long: data.countryInfo.long,
     flag: data.countryInfo.flag,
+    iso3: data.countryInfo.iso3,
   },
 });
 
