@@ -1,3 +1,8 @@
+export enum DataCount {
+  TOTAL = 'total',
+  PER_100 = 'per-100'
+}
+
 export enum Parameter {
   CONFIRMED = 'confirmed',
   DEATHS = 'deaths',
@@ -13,6 +18,15 @@ export enum Parameter {
   DAY_RECOVERED_PER_100 = 'day-recovered-per-100',
 }
 
+export enum DataValue {
+  CASES = 'cases',
+  DEATHS = 'deaths',
+  RECOVERED = 'recovered',
+  TODAY_CASES = 'todayCases',
+  TODAY_DEATHS = 'todayDeaths',
+  TODAY_RECOVERED = 'todayRecovered',
+}
+
 export enum Screen {
   ALL = 'all',
   CHART = 'chart',
@@ -26,14 +40,29 @@ export const parameterToTitle = {
   deaths: 'Total deaths',
   recovered: 'Total recovered',
   'confirmed-per-100': 'Confirmed per 100,000 population',
-  'deaths-per-100': 'Deaths  per 100,000 population',
-  'recovered-per-100': 'Recovered  per 100,000 population',
+  'deaths-per-100': 'Deaths per 100,000 population',
+  'recovered-per-100': 'Recovered per 100,000 population',
   'day-confirmed': 'Last day confirmed',
   'day-deaths': 'Last day deaths',
   'day-recovered': 'Last day recovered',
   'day-confirmed-per-100': 'Last day confirmed per 100,000 population',
   'day-deaths-per-100': 'Last day deaths per 100,000 population',
   'day-recovered-per-100': 'Last day recovered per 100,000 population',
+};
+
+export const parameterToTableTitle = {
+  'confirmed': 'Total cases',
+  'deaths': 'Total cases',
+  'recovered': 'Total cases',
+  'confirmed-per-100': 'Total cases per 100,000 population',
+  'deaths-per-100': 'Total cases per 100,000 population',
+  'recovered-per-100': 'Total cases per 100,000 population',
+  'day-confirmed': 'Last day cases',
+  'day-deaths': 'Last day cases',
+  'day-recovered': 'Last day cases',
+  'day-confirmed-per-100': 'Last day cases per 100,000 population',
+  'day-deaths-per-100': 'Last day cases per 100,000 population',
+  'day-recovered-per-100': 'Last day cases per 100,000 population',
 };
 
 export const PARAMETERS_LIST = [

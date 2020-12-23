@@ -1,17 +1,32 @@
 import classNames from 'classnames';
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { getGlobalData } from '@/store/data/selector';
+import { StateInterface, GlobalDataInterface } from '@/types/entities';
+import { formatDate } from '@/utils/common';
 
 import styles from './Info.scss';
 
-const Info: React.FC = () => (
-  <div className={classNames(
-    styles['info'],
-    styles['grid__element']
-  )}
-  >
-    <p className={styles['info__text']}>Last updated at</p>
-    <p className={styles['info__date']}>17/12/2020, 10:20</p>
-  </div>
-);
+interface InfoProps {
+  globalData: GlobalDataInterface;
+}
 
-export default Info;
+const Info: React.FC<InfoProps> = (props: InfoProps) => {
+  const {
+    globalData: { updated },
+  } = props;
+
+  return (
+    <div className={classNames(styles['info'], styles['grid__element'])}>
+      <p className={styles['info__text']}>Last updated at</p>
+      <p className={styles['info__date']}>{formatDate(updated)}</p>
+    </div>
+  );
+};
+
+const mapStateToProps = (state: StateInterface) => ({
+  globalData: getGlobalData(state),
+});
+
+export default connect(mapStateToProps)(Info);

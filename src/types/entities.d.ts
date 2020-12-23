@@ -74,3 +74,9 @@ export interface StateInterface {
 export interface ShownCountryInterface extends CountryData {
   count: number;
 }
+
+export interface ShownTableInterface {
+  name: string;
+  count: number;
+  isActive: boolean;
+}
