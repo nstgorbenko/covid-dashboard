@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { DispatchWithoutAction, useState } from 'react';
 import styles from './List.scss';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
 import ListItem from '@/components/ListItem';
-import {connect} from "react-redux";
+import {connect, DispatchProp, MapDispatchToPropsParam} from "react-redux";
 import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector';
 import { ActionCreator } from '@/store/app/app';
 import { Parameter, Screen } from '@/constants/constants';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
-import { Dispatch } from 'redux';
+import { Dispatch, Middleware, MiddlewareAPI } from 'redux';
 import { getCountriesData } from '@/store/data/selector';
 import getShownCountriesData from '@/utils/countries-data';
 import { getScreenComponentClass } from '@/utils/common';
+import { Operation } from '@/store/data/data';
+import { ThunkDispatch, ThunkMiddleware } from 'redux-thunk';
+import { TemplateMiddle } from 'typescript';
 
 interface ListProps {
   fullScreen: Screen;
@@ -58,9 +61,10 @@ const mapStateToProps = (state: StateInterface) => ({
   countriesData: getCountriesData(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
   changeCountry(country: string) {
-    dispatch(ActionCreator.changeCountry(country));
+    dispatch(Operation.loadCountryHistoricalData(country))
+      .then(() => dispatch(ActionCreator.changeCountry(country)));
   },
   changeActiveScreen(screen: Screen) {
     dispatch(ActionCreator.changeActiveScreen(screen));
