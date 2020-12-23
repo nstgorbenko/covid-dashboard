@@ -69,31 +69,40 @@ const Search: React.FC<ListProps> = (props: ListProps) => {
       });
   }, []);
 
-  const handleSelectedCountry = (country: string) => {
-    setInfo(
-      posts.filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)[0]
-    );
-  };
+React.useEffect(() => {
+  props.changeCountry(info.country);
+}, [info.country]);
 
+const handleSelectedCountry = (country: string) => {
+  setInfo(
+    posts.filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)[0]
+  );
+};
+
+const renderSelect = (event:any) => {
+  event.target.nextSibling.style.visibility = 'visible';
+}
+
+const hideSelect = (event:any) => {
+  event.target.nextSibling.style.visibility = 'hidden';
+}
 
   return (
     <div className={styles['search']}>
-      {loading && <p>...Loading</p>}
       <div className={styles['search__input-container']}>
         <input
           className={styles['search__bar']}
           type="text"
           placeholder="Search"
           onChange={e => setCountry(e.target.value)}
-          // onFocus={document.querySelector('')}
+          onFocus={renderSelect}
+          onBlur={hideSelect}
         />
-        {/* isFocus true? --> Один класс isFocus false --> Другой */}
-        <select size={3} className={styles['select']}>
+        <select size={3} id={'select'} className={styles['search__select']}>
           {posts
             .filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
             .map(c => (
-              <option key={c.country} onClick={() => {
-                props.changeCountry(info.country);
+              <option key={c.country} className={styles['select__options']} onMouseDown={() => {
                 handleSelectedCountry(c.country);
               }}>
                 {c.country}

@@ -71,7 +71,7 @@
   }
 }
 
-.select {
+.search__select {
   background-color: #161b22;
   color: #c9d1d9;
   border: 1px solid #30363d;
@@ -80,4 +80,9 @@
   top: 39px;
   z-index: 2;
   width: 278px;
+  visibility: hidden;
+}
+
+.select__options:hover {
+  background-color: #474f59;
 }
