@@ -1,7 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
-import styles from './TableRow.scss';
+import React from 'react';
+
 import { ShownTableInterface } from '@/types/entities';
+
+import styles from './TableRow.scss';
 
 interface TableProps {
   data: ShownTableInterface;

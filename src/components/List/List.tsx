@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import styles from './List.scss';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import ListItem from '@/components/ListItem';
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
 import { Parameter, Screen } from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
 import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector';
 import { getCountriesData } from '@/store/data/selector';
-import getShownCountriesData from '@/utils/countries-data';
+import { CountryDataInterface, StateInterface } from '@/types/entities';
 import { getScreenComponentClass } from '@/utils/common';
+import getShownCountriesData from '@/utils/countries-data';
 
 import styles from './List.scss';
 
@@ -35,8 +39,8 @@ const List: React.FC<ListProps> = (props: ListProps) => {
 
   return (
     <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
-      <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
-      <Title screen={screenName}/>
+      <Resize isFullScreen={isFullScreen} onClick={changeScreenView} />
+      <Title screen={screenName} />
       <ul className={styles['list__items']}>
         {shownCountriesData.map(countryData => (
           <ListItem

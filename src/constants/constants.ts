@@ -51,9 +51,9 @@ export const parameterToTitle = {
 };
 
 export const parameterToTableTitle = {
-  'confirmed': 'Total cases',
-  'deaths': 'Total cases',
-  'recovered': 'Total cases',
+  confirmed: 'Total cases',
+  deaths: 'Total cases',
+  recovered: 'Total cases',
   'confirmed-per-100': 'Total cases per 100,000 population',
   'deaths-per-100': 'Total cases per 100,000 population',
   'recovered-per-100': 'Total cases per 100,000 population',

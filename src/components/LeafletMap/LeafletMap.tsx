@@ -13,7 +13,7 @@ import { ActionCreator } from '@/store/app/app';
 import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector';
 import { getCountriesData } from '@/store/data/selector';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
-import { getShownCountriesData } from '@/utils/countries-data';
+import getShownCountriesData from '@/utils/countries-data';
 
 const defaultLatLng: LatLngTuple = [48.865572, 2.283523];
 const zoom = 2;
@@ -34,9 +34,7 @@ const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
   };
 
   const getMaxCount = (data: any): object => {
-    const max: object = data.reduce((prev: object, cur: object): object => {
-      return cur.count > prev.count ? cur : prev;
-    });
+    const max: object = data.reduce((prev: object, cur: object): object => (cur.count > prev.count ? cur : prev));
     return max;
   };
 
@@ -88,14 +86,14 @@ const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
-            noWrap={true}
+            noWrap
           />
         </LayersControl.BaseLayer>
         <LayersControl.BaseLayer name="Black And White">
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png"
-            noWrap={true}
+            noWrap
           />
         </LayersControl.BaseLayer>
       </LayersControl>
