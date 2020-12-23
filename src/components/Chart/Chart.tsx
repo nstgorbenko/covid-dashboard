@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Dispatch } from 'redux';
 import {connect} from "react-redux";
-import classNames from 'classnames';
 import { Line } from 'react-chartjs-2';
 import styles from './Chart.scss';
 import Resize from '@/components/Resize';
@@ -8,23 +8,37 @@ import Title from '@/components/Title';
 import { Parameter, Screen } from '@/constants/constants';
 import { StateInterface, HistoricalDataInterface, CountryDataInterface, GlobalDataInterface } from '@/types/entities';
 import { getGlobalHistoricalData, getCountryHistoricalData, getCountriesData, getGlobalData } from '@/store/data/selector';
-import { getCountry, getParameter } from '@/store/app/selector';
+import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
+import { ActionCreator } from '@/store/app/app';
 import getShownChartData from '@/utils/chart-data';
+import { getScreenComponentClass } from '@/utils/common';
+import classNames from 'classnames';
 
 interface ChartProps {
+  fullScreen: Screen;
   country: string;
   parameter: Parameter;
   countriesData: Array<CountryDataInterface>;
   globalData: GlobalDataInterface;
   globalHistoricalData: HistoricalDataInterface;
   countryHistoricalData: HistoricalDataInterface;
+  changeActiveScreen(screen: Screen): void;
 }
 
 const Chart: React.FC<ChartProps> = (props: ChartProps) => {
-  const { country, parameter, countriesData, globalData, globalHistoricalData, countryHistoricalData } = props;
+  const { fullScreen, country, parameter, countriesData, globalData, globalHistoricalData, countryHistoricalData, changeActiveScreen } = props;
+
   const { population } = !country ? globalData : countriesData.find((countryData) => countryData.country === country) as CountryDataInterface;
   const historicalData = !country ? globalHistoricalData : countryHistoricalData;
   const shownData = getShownChartData(historicalData, population, parameter);
+
+  const screenName = Screen.CHART;
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const changeScreenView = () => {
+    isFullScreen ? changeActiveScreen(Screen.ALL) : changeActiveScreen(screenName);
+    setIsFullScreen(prev => !prev);
+  };
 
   const data = {
     labels: shownData.dates,
@@ -39,17 +53,21 @@ const Chart: React.FC<ChartProps> = (props: ChartProps) => {
     ]
   };
 
+  // <div className={classNames(
+  //   styles['grid__element'],
+  //   styles['chart'],
+  //   styles['grid__element--show']
+  //   )}>
+
   return (
-    <div className={classNames(
-      styles['chart'],
-      styles['grid__element']
-    )}>
-      <Resize isFullScreen={false} onClick={() => {}}/>
-      <Title screen={Screen.CHART}/>
+    <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
+      <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
+      <Title screen={screenName}/>
       <div className={styles['chart__wrapper']}>
         <Line
           data={data}
           options={{
+            responsive: true,
             maintainAspectRatio: false,
             legend: {
               display: false
@@ -70,6 +88,7 @@ const Chart: React.FC<ChartProps> = (props: ChartProps) => {
 };
 
 const mapStateToProps = (state: StateInterface) => ({
+  fullScreen: getActiveScreen(state),
   country: getCountry(state),
   parameter: getParameter(state),
   countriesData: getCountriesData(state),
@@ -78,4 +97,10 @@ const mapStateToProps = (state: StateInterface) => ({
   countryHistoricalData: getCountryHistoricalData(state),
 });
 
-export default connect(mapStateToProps)(Chart);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  changeActiveScreen(screen: Screen) {
+    dispatch(ActionCreator.changeActiveScreen(screen));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chart);
