@@ -35,6 +35,11 @@ export enum Screen {
   TABLE = 'table',
 }
 
+export enum Cases {
+  NEW = 'new',
+  CUMULATIVE = 'cumulative',
+}
+
 export const parameterToTitle = {
   confirmed: 'Total confirmed',
   deaths: 'Total deaths',

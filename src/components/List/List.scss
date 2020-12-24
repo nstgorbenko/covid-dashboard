@@ -1,12 +1,5 @@
 @import '@/assets/stylesheets/utils/variables.scss';
 
-.grid__element {
-  position: relative;
-  background: $main-color--darker;
-  border: 1px solid $main-color;
-  border-radius: 4px;
-}
-
 .list {
   grid-area: l;
   display: flex;
@@ -35,19 +28,24 @@
   }
 }
 
-/* разворачивает блок информации на весь экран */
-.grid__element--show {
-  position: absolute;
-  top: -10px;
-  bottom: -10px;
-  left: -10px;
-  right: -10px;
-  height: calc(100vh - 80px - 40px - 20px);
-  grid-area: none;
-  z-index: 2;
-}
+.grid__element {
+  position: relative;
+  background: $main-color--darker;
+  border: 1px solid $main-color;
+  border-radius: 4px;
 
-/* скрывает блок информации */
-.grid__element--hide {
-  display: none;
+  &--show {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(100vh - 80px - 40px - 40px);
+    grid-area: none;
+    z-index: 2;
+  }
+
+  &--hide {
+    display: none;
+  }
 }

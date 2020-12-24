@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import {
-  Parameter, parameterToTitle, parameterToTableTitle, PARAMETERS_LIST, 
-, Screen } from '@/constants/constants';
+  Parameter, parameterToTitle, parameterToTableTitle, PARAMETERS_LIST, Screen } from '@/constants/constants';
 import { getNextArrayItem, getPreviousArrayItem, getNextThirdItem, getPreviousThirdItem } from '@/utils/common';
 
 import { ActionCreator } from '@/store/app/app';

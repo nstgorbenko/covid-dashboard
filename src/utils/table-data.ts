@@ -7,7 +7,7 @@ const TABLE_ROWS = ['Confirmed', 'Deaths', 'Recovered'];
 
 const getData = (data: GlobalDataInterface | CountryDataInterface, parameter: DataValue, count: DataCount = DataCount.TOTAL) => {
   if (count === DataCount.PER_100) {
-    return Math.trunc(data[parameter] / data.population * 100000);
+    return (data[parameter] / data.population * 100000).toFixed(2);
   }
   return data[parameter];
 };
@@ -50,7 +50,7 @@ const getShownTableData = (globalData: GlobalDataInterface, countriesData: Array
 
   return TABLE_ROWS.map((row, index) => ({
     name: row,
-    count: getTableCount(rawData, PARAMETERS_LIST[tableDataStartIndex + index] as Parameter),
+    count: +getTableCount(rawData, PARAMETERS_LIST[tableDataStartIndex + index] as Parameter),
     isActive: parameter === PARAMETERS_LIST[tableDataStartIndex + index],
   }));
 };

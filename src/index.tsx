@@ -8,7 +8,6 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-// import data from '@/markup/data';
 import App from '@/App';
 import api from '@/api';
 import { Operation } from '@/store/data/data';
@@ -36,4 +35,5 @@ const init = () => {
 
 store.dispatch(Operation.loadGlobalData())
   .then(() => store.dispatch(Operation.loadCountriesData()))
+  .then(() => store.dispatch(Operation.loadGlobalHistoricalData()))
   .then(() => init());

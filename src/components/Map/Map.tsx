@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import LeafletMap from '@/components/LeafletMap';
 import Resize from '@/components/Resize';
@@ -11,10 +10,12 @@ import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector'
 import { getCountriesData } from '@/store/data/selector';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
 import { getScreenComponentClass } from '@/utils/common';
+import { Operation } from '@/store/data/data';
 
 import styles from './Map.scss';
 
 interface MapProps {
+  fullScreen: Screen;
   parameter: Parameter;
   countriesData: Array<CountryDataInterface>;
   changeCountry(country: string): void;
@@ -36,6 +37,7 @@ const Map: React.FC<MapProps> = (props: MapProps) => {
       <Resize isFullScreen={isFullScreen} onClick={changeScreenView} />
       <Title screen={Screen.MAP} />
       <LeafletMap
+        screen={fullScreen}
         parameter={parameter}
         countriesData={countriesData}
         onCountryClick={changeCountry}
@@ -51,9 +53,10 @@ const mapStateToProps = (state: StateInterface) => ({
   countriesData: getCountriesData(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
   changeCountry(country: string) {
-    dispatch(ActionCreator.changeCountry(country));
+    dispatch(Operation.loadCountryHistoricalData(country))
+      .then(() => dispatch(ActionCreator.changeCountry(country)));
   },
   changeActiveScreen(screen: Screen) {
     dispatch(ActionCreator.changeActiveScreen(screen));
