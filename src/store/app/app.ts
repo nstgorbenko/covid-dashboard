@@ -38,9 +38,9 @@ const reducer = (state = initialState, action: ActionInterface): AppStateInterfa
     case ActionType.CHANGE_COUNTRY:
       return { ...state, country: action.payload };
     case ActionType.CHANGE_PARAMETER:
-      return { ...state, parameter: action.payload };
+      return { ...state, parameter: action.payload as Parameter };
     case ActionType.CHANGE_ACTIVE_SCREEN:
-      return { ...state, activeScreen: action.payload };
+      return { ...state, activeScreen: action.payload as Screen };
     default:
       return state;
   }

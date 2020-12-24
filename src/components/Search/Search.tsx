@@ -1,115 +1,73 @@
-import axios from 'axios';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import styles from './Search.scss';
-import { Parameter, Screen } from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
-import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
+import { getCountry } from '@/store/app/selector';
 import { getCountriesData } from '@/store/data/selector';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
+import { Operation } from '@/store/data/data';
 
-interface ListProps {
-  fullScreen: Screen;
+interface SearchProps {
   country: string;
-  parameter: Parameter;
   countriesData: Array<CountryDataInterface>;
   changeCountry(country: string): void;
 }
 
-interface IPost {
-  country: string;
-  cases: number;
-  todayCases: number;
-  deaths: number;
-  todayDeaths: number;
-  recovered: number;
-  todayRecovered: number;
-  countryInfo: { flag: string };
-}
+const Search: React.FC<SearchProps> = (props: SearchProps) => {
+  const { country, countriesData, changeCountry } = props;
+  const countries = countriesData.map(({ country }) => country);
 
-const defaultPosts: IPost[] = [];
+  const [currentCountry, setCurrentCountry] = useState('');
+  const inputElement = useRef(null);
 
-const Search: React.FC<ListProps> = (props: ListProps) => {
-  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(defaultPosts);
-  const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(
-    true
-  );
-  const [error, setError] = React.useState<string>('');
-  const [info, setInfo] = React.useState<IPost>({
-    country: '',
-    cases: 0,
-    todayCases: 0,
-    deaths: 0,
-    todayDeaths: 0,
-    recovered: 0,
-    todayRecovered: 0,
-    countryInfo: { flag: '' },
-  });
-  const [country, setCountry]: [string, (error: string) => void] = React.useState('');
+  const renderSelect = (event:any) => {
+    event.target.nextSibling.style.visibility = 'visible';
+  }
+  const hideSelect = (event:any) => {
+    event.target.nextSibling.style.visibility = 'hidden';
+  }
+  const onButtonClick = (newCountry: string) => {
+    (inputElement.current as unknown as HTMLInputElement).value = newCountry;
+  };
 
-  React.useEffect(() => {
-    axios
-      .get<IPost[]>('https://disease.sh/v3/covid-19/countries')
-      .then(response => {
-        setPosts(response.data);
-        setLoading(false);
-      })
-      .catch(ex => {
-        const err = axios.isCancel(ex)
-          ? 'Request cancelled'
-          : ex.code === 'ECONNABORTED'
-            ? 'A timeout has occurred'
-            : ex.response.status === 404
-              ? 'Resource not found'
-              : 'An unexpected error has occurred';
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
-
-React.useEffect(() => {
-  props.changeCountry(info.country);
-}, [info.country]);
-
-const handleSelectedCountry = (country: string) => {
-  setInfo(
-    posts.filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)[0]
-  );
-};
-
-const renderSelect = (event:any) => {
-  event.target.nextSibling.style.visibility = 'visible';
-}
-
-const hideSelect = (event:any) => {
-  event.target.nextSibling.style.visibility = 'hidden';
-}
+  useEffect(() => {
+    onButtonClick(country);
+  }, [country])
 
   return (
     <div className={styles['search']}>
       <div className={styles['search__input-container']}>
         <input
+          ref={inputElement}
           className={styles['search__bar']}
           type="text"
           placeholder="Search"
-          onChange={e => setCountry(e.target.value)}
+          defaultValue={country}
+          onChange={e => {
+            setCurrentCountry(e.target.value);
+          }}
           onFocus={renderSelect}
           onBlur={hideSelect}
         />
-        <select size={3} id={'select'} className={styles['search__select']}>
-          {posts
-            .filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
-            .map(c => (
-              <option key={c.country} className={styles['select__options']} onMouseDown={() => {
-                handleSelectedCountry(c.country);
-              }}>
-                {c.country}
+        <select size={3} className={styles['search__select']}>
+          {countries
+            .filter((country) => country.toLowerCase().indexOf(currentCountry.toLowerCase()) !== -1)
+            .map((country) =>
+              <option
+                key={country}
+                className={styles['select__options']}
+                onMouseDown={() => {
+                  changeCountry(country);
+                  onButtonClick(country);
+                }}>{country}
               </option>
-            ))}
+          )}
         </select>
       </div>
-      <span className={styles['search__reset']}>
+      <span className={styles['search__reset']} onClick={() => {
+        changeCountry('');
+        onButtonClick('');
+        }}>
         <svg className={styles['search__reset-icon']} width="36" height="36">
           <use xlinkHref="#icon-search-reset" />
         </svg>
@@ -119,21 +77,19 @@ const hideSelect = (event:any) => {
           <use xlinkHref="#icon-keyboard" />
         </svg>
       </span>
-      {error && <p>{error}</p>}
     </div>
   );
 };
 
 const mapStateToProps = (state: StateInterface) => ({
-  fullScreen: getActiveScreen(state),
   country: getCountry(state),
-  parameter: getParameter(state),
   countriesData: getCountriesData(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
   changeCountry(country: string) {
-    dispatch(ActionCreator.changeCountry(country));
+    dispatch(Operation.loadCountryHistoricalData(country))
+      .then(() => dispatch(ActionCreator.changeCountry(country)));
   },
 });
 

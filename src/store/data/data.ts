@@ -5,7 +5,7 @@ import { ThunkAction } from 'redux-thunk';
 
 interface ActionInterface {
   type: string;
-  payload: GlobalDataInterface | Array<CountryDataInterface> | HistoricalDataInterface;
+  payload: GlobalDataInterface | Array<CountryDataInterface> | HistoricalDataInterface | {};
 }
 
 const initialState: DataStateInterface = {
@@ -35,7 +35,7 @@ const ActionCreator = {
     type: ActionType.LOAD_GLOBAL_HISTORICAL_DATA,
     payload: globalHistoricalData,
   }),
-  loadCountryHistoricalData: (countryHistoricalData: HistoricalDataInterface) => ({
+  loadCountryHistoricalData: (countryHistoricalData: HistoricalDataInterface | {}) => ({
     type: ActionType.LOAD_COUNTRY_HISTORICAL_DATA,
     payload: countryHistoricalData,
   }),
@@ -62,12 +62,16 @@ const Operation = {
         dispatch(ActionCreator.loadGlobalHistoricalData(data));
       });
   },
-  loadCountryHistoricalData: (country: string): ThunkAction<Promise<void>, StateInterface, AxiosInstance, ActionInterface> => (dispatch, getState, api) => {
-    return api.get(`/historical/${country}?lastdays=all`)
+  loadCountryHistoricalData: (country: string): ThunkAction<Promise<void> | any, StateInterface, AxiosInstance, ActionInterface> => (dispatch, getState, api) => {
+    if (country) {
+      return api.get(`/historical/${country}?lastdays=all`)
       .then(({ data }) => {
         const adaptedCountryHistoricalData = adaptCountryHistoricalData(data);
         dispatch(ActionCreator.loadCountryHistoricalData(adaptedCountryHistoricalData));
       });
+    } else {
+      return Promise.resolve(() => dispatch(ActionCreator.loadCountryHistoricalData({})));
+    }
   },
 };
 
