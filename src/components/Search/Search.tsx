@@ -26,12 +26,12 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
   const hideSelect = (event:any) => {
     event.target.nextSibling.style.visibility = 'hidden';
   }
-  const onButtonClick = (newCountry: string) => {
+  const onCountryChoice = (newCountry: string) => {
     (inputElement.current as unknown as HTMLInputElement).value = newCountry;
   };
 
   useEffect(() => {
-    onButtonClick(country);
+    onCountryChoice(country);
   }, [country])
 
   return (
@@ -58,7 +58,7 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
                 className={styles['select__options']}
                 onMouseDown={() => {
                   changeCountry(country);
-                  onButtonClick(country);
+                  onCountryChoice(country);
                 }}>{country}
               </option>
           )}
@@ -66,7 +66,7 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
       </div>
       <span className={styles['search__reset']} onClick={() => {
         changeCountry('');
-        onButtonClick('');
+        onCountryChoice('');
         }}>
         <svg className={styles['search__reset-icon']} width="36" height="36">
           <use xlinkHref="#icon-search-reset" />
