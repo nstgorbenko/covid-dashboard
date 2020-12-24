@@ -2,7 +2,6 @@
 // import Keyboard from 'react-virtual-keyboard';
 // import {  } from '@/components/Search'
 
-
 // const VirtualKeyboard: React.FC = () => {
 //   onInputChanged = (data) => {
 //     this.setState({ input: data });
