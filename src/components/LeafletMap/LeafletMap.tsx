@@ -3,16 +3,11 @@ import React from 'react';
 import {
   MapContainer, TileLayer, GeoJSON, LayersControl,
 } from 'react-leaflet';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import geojson from '@/assets/data/geojson';
 import styles from '@/components/LeafletMap/LeafletMap.scss';
 import { Parameter, Screen } from '@/constants/constants';
-import { ActionCreator } from '@/store/app/app';
-import { getCountry, getParameter, getActiveScreen } from '@/store/app/selector';
-import { getCountriesData } from '@/store/data/selector';
-import { CountryDataInterface, StateInterface } from '@/types/entities';
+import { CountryDataInterface } from '@/types/entities';
 import getShownCountriesData from '@/utils/countries-data';
 
 const defaultLatLng: LatLngTuple = [48.865572, 2.283523];
@@ -20,10 +15,11 @@ const zoom = 2;
 interface LeafletMapProps {
   parameter: Parameter;
   countriesData: Array<CountryDataInterface>;
+  onCountryClick(country: string): void;
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
-  const { parameter, countriesData } = props;
+  const { parameter, countriesData, onCountryClick } = props;
   const shownCountriesData = getShownCountriesData(countriesData, parameter);
 
   const mapStyle = {
@@ -72,11 +68,12 @@ const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
     }
   };
 
-  const onEachCountry = (area: any, layer: any) => {
+  const onEachCountry = (area: any, layer: any): void => {
     const country: string = area.properties.ADMIN;
     const count: number = selectCountry(shownCountriesData, area.properties.ISO_A3) || 0;
     layer.options.fillColor = getColor(count);
     layer.bindTooltip(`${country} ${count.toLocaleString() || 'no value'}`, { closeButton: false, sticky: true });
+    layer.on('click', () => onCountryClick(country));
   };
 
   return (
@@ -106,20 +103,4 @@ const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
   );
 };
 
-const mapStateToProps = (state: StateInterface) => ({
-  fullScreen: getActiveScreen(state),
-  country: getCountry(state),
-  parameter: getParameter(state),
-  countriesData: getCountriesData(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  changeCountry(country: string) {
-    dispatch(ActionCreator.changeCountry(country));
-  },
-  changeActiveScreen(screen: Screen) {
-    dispatch(ActionCreator.changeActiveScreen(screen));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LeafletMap);
+export default LeafletMap;

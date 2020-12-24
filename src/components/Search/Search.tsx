@@ -2,12 +2,14 @@ import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import styles from './Search.scss';
+
 import { Parameter, Screen } from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
 import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
 import { getCountriesData } from '@/store/data/selector';
 import { CountryDataInterface, StateInterface } from '@/types/entities';
+
+import styles from './Search.scss';
 
 interface ListProps {
   fullScreen: Screen;
@@ -68,23 +70,23 @@ const Search: React.FC<ListProps> = (props: ListProps) => {
       });
   }, []);
 
-React.useEffect(() => {
-  props.changeCountry(info.country);
-}, [info.country]);
+  React.useEffect(() => {
+    props.changeCountry(info.country);
+  }, [info.country]);
 
-const handleSelectedCountry = (country: string) => {
-  setInfo(
-    posts.filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)[0]
-  );
-};
+  const handleSelectedCountry = (country: string) => {
+    setInfo(
+      posts.filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)[0]
+    );
+  };
 
-const renderSelect = (event:any) => {
-  event.target.nextSibling.style.visibility = 'visible';
-}
+  const renderSelect = (event:any) => {
+    event.target.nextSibling.style.visibility = 'visible';
+  };
 
-const hideSelect = (event:any) => {
-  event.target.nextSibling.style.visibility = 'hidden';
-}
+  const hideSelect = (event:any) => {
+    event.target.nextSibling.style.visibility = 'hidden';
+  };
 
   return (
     <div className={styles['search']}>
@@ -97,13 +99,17 @@ const hideSelect = (event:any) => {
           onFocus={renderSelect}
           onBlur={hideSelect}
         />
-        <select size={3} id={'select'} className={styles['search__select']}>
+        <select size={3} id="select" className={styles['search__select']}>
           {posts
             .filter(val => val.country.toLowerCase().indexOf(country.toLowerCase()) !== -1)
             .map(c => (
-              <option key={c.country} className={styles['select__options']} onMouseDown={() => {
-                handleSelectedCountry(c.country);
-              }}>
+              <option
+                key={c.country}
+                className={styles['select__options']}
+                onMouseDown={() => {
+                  handleSelectedCountry(c.country);
+                }}
+              >
                 {c.country}
               </option>
             ))}
