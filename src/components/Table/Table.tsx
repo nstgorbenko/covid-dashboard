@@ -26,14 +26,18 @@ interface TableProps {
 
 const Table: React.FC<TableProps> = (props: TableProps) => {
   const {
-    fullScreen, country, parameter, countriesData, globalData, changeActiveScreen,
+    fullScreen, country, parameter, countriesData, globalData,
   } = props;
   const shownData = getShownTableData(globalData, countriesData, country, parameter);
   const screenName = Screen.TABLE;
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   const changeScreenView = () => {
-    isFullScreen ? changeActiveScreen(Screen.ALL) : changeActiveScreen(screenName);
+    if (isFullScreen) {
+      props.changeActiveScreen(Screen.ALL);
+    } else {
+      props.changeActiveScreen(screenName);
+    }
     setIsFullScreen(prev => !prev);
   };
 

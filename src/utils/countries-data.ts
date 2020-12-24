@@ -2,9 +2,9 @@ import { DataCount, DataValue, Parameter } from '@/constants/constants';
 import { CountryDataInterface, ShownCountryInterface } from '@/types/entities';
 
 const getData = (countriesData: Array<CountryDataInterface>, value: DataValue, count: DataCount = DataCount.TOTAL): Array<ShownCountryInterface> => {
-  const getCount = (countryData: CountryDataInterface, option: string) => {
+  const getCount = (countryData: CountryDataInterface, option: DataValue) => {
     if (count === DataCount.PER_100) {
-      return (countryData[option] / countryData.population * 100000).toFixed(2);
+      return ((countryData[option] / countryData.population) * 100000).toFixed(2);
     }
     return countryData[option];
   };
@@ -44,7 +44,7 @@ const getShownCountriesData = (countriesData: Array<CountryDataInterface>, value
     case Parameter.DAY_RECOVERED_PER_100:
       return getData(countriesData, DataValue.TODAY_RECOVERED, DataCount.PER_100);
     default:
-      throw new Error(`Unknown parameter: ${value}`);
+      throw new Error(`Unknown parameter: ${value as string}`);
   }
 };
 

@@ -36,4 +36,5 @@ const init = () => {
 store.dispatch(Operation.loadGlobalData())
   .then(() => store.dispatch(Operation.loadCountriesData()))
   .then(() => store.dispatch(Operation.loadGlobalHistoricalData()))
-  .then(() => init());
+  .then(() => init())
+  .catch(error => { throw error; });

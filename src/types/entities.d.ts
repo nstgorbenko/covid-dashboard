@@ -3,11 +3,11 @@ import { Parameter, Screen } from '@/constants/constants';
 interface CountryData {
   country: string;
   countryInfo: {
-    lat: number,
-    long: number,
-    flag: string,
-    iso3: string,
-  }
+    lat: number;
+    long: number;
+    flag: string;
+    iso3: string;
+  };
 }
 
 interface ServerCountryData {
@@ -23,42 +23,42 @@ interface ServerCountryData {
 }
 
 interface ServerGlobalExtraData {
-  active:	number;
-  critical:	number;
-  casesPerOneMillion:	number;
+  active: number;
+  critical: number;
+  casesPerOneMillion: number;
   deathsPerOneMillion: number;
   tests: number;
-  testsPerOneMillion:	number;
-  oneCasePerPeople:	number;
+  testsPerOneMillion: number;
+  oneCasePerPeople: number;
   oneDeathPerPeople: number;
-  oneTestPerPeople:	number;
+  oneTestPerPeople: number;
   activePerOneMillion: number;
-  recoveredPerOneMillion:	number;
+  recoveredPerOneMillion: number;
   criticalPerOneMillion: number;
   affectedCountries: number;
 }
 
 export interface HistoricalDataInterface {
   cases: {
-    [key: string]: number
+    [key: string]: number;
   };
   deaths: {
-    [key: string]: number
+    [key: string]: number;
   };
   recovered: {
-    [key: string]: number
+    [key: string]: number;
   };
 }
 
 export interface GlobalDataInterface {
   updated: number;
   cases: number;
-  todayCases:	number;
-  deaths:	number;
+  todayCases: number;
+  deaths: number;
   todayDeaths: number;
   recovered: number;
-  todayRecovered:	number;
-  population:	number;
+  todayRecovered: number;
+  population: number;
 }
 
 export interface CountryDataInterface extends GlobalDataInterface, CountryData {}
@@ -74,10 +74,10 @@ export interface AppStateInterface {
 }
 
 export interface DataStateInterface {
-  globalData: GlobalDataInterface | {};
+  globalData: GlobalDataInterface | Record<string, never>;
   countriesData: Array<CountryDataInterface> | [];
-  globalHistoricalData: HistoricalDataInterface | {};
-  countryHistoricalData: HistoricalDataInterface | {};
+  globalHistoricalData: HistoricalDataInterface | Record<string, never>;
+  countryHistoricalData: HistoricalDataInterface | Record<string, never>;
 }
 
 export interface StateInterface {
@@ -97,6 +97,11 @@ export interface ShownTableInterface {
 
 export interface ServerCountryHistoricalInterface {
   country: string;
-  province: Array<String>;
+  province: Array<string>;
   timeline: HistoricalDataInterface;
+}
+
+export interface ChartData {
+  dates: Array<string>;
+  counts: Array<number>;
 }

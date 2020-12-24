@@ -40,6 +40,18 @@ export enum Cases {
   CUMULATIVE = 'cumulative',
 }
 
+export enum MapColor {
+  DARKEST = '#1b421f',
+  MUCH_DARKER = '#1f5827',
+  DARKER = '#226f2e',
+  DARK = '#238636',
+  MAIN = '#509a56',
+  LIGHT = '#75ae76',
+  LIGHTER = '#97c297',
+  MUCH_LIGHTER = '#bad6b9',
+  LIGHTEST = '#dcebdb',
+}
+
 export const parameterToTitle = {
   confirmed: 'Total confirmed',
   deaths: 'Total deaths',

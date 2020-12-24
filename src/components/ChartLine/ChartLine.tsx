@@ -1,12 +1,13 @@
+import { ChartTooltipItem } from 'chart.js';
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+
+import { ChartData } from '@/types/entities';
+
 import styles from './ChartLine.scss';
 
 interface ChartLineProps {
-  values: {
-    dates: Array<string>,
-    counts: Array<number>,
-  };
+  values: ChartData;
 }
 
 const ChartLine: React.FC<ChartLineProps> = (props: ChartLineProps) => {
@@ -14,7 +15,7 @@ const ChartLine: React.FC<ChartLineProps> = (props: ChartLineProps) => {
 
   const data: Chart.ChartData = {
     labels: values.dates,
-    datasets:[
+    datasets: [
       {
         data: values.counts,
         backgroundColor: '#238636',
@@ -22,8 +23,8 @@ const ChartLine: React.FC<ChartLineProps> = (props: ChartLineProps) => {
         pointBorderColor: '#238636',
         pointStyle: 'circle',
         radius: 1,
-      }
-    ]
+      },
+    ],
   };
 
   return (
@@ -34,7 +35,7 @@ const ChartLine: React.FC<ChartLineProps> = (props: ChartLineProps) => {
           responsive: true,
           maintainAspectRatio: false,
           legend: {
-            display: false
+            display: false,
           },
           tooltips: {
             intersect: false,
@@ -44,8 +45,10 @@ const ChartLine: React.FC<ChartLineProps> = (props: ChartLineProps) => {
             bodyFontColor: '#c9d1d9',
             displayColors: false,
             callbacks: {
-              label: (tooltipItem: any) => tooltipItem.yLabel.toLocaleString()
-            }
+              label: (
+                tooltipItem: ChartTooltipItem
+              ) => (tooltipItem.yLabel as ChartTooltipItem).toLocaleString(),
+            },
           },
           scales: {
             xAxes: [{
@@ -65,7 +68,7 @@ const ChartLine: React.FC<ChartLineProps> = (props: ChartLineProps) => {
                 lineHeight: 1.2,
                 fontSize: 15,
                 autoSkipPadding: 15,
-                callback: (value: any) => value.toLocaleString(),
+                callback: (value: number) => value.toLocaleString(),
               },
             }],
           },

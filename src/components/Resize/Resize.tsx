@@ -9,22 +9,25 @@ interface ResizeProps {
 }
 
 const Resize: React.FC<ResizeProps> = (props: ResizeProps) => {
-  const { isFullScreen, onClick } = props;
+  const { isFullScreen } = props;
 
   const resizeClass = isFullScreen
     ? classNames(styles['resize'], styles['resize--collapse'])
     : classNames(styles['resize'], styles['resize--expand']);
+  const onButtonClick = () => props.onClick();
 
   return (
-    <div
+    <button
+      type="button"
+      aria-label="Resize screen"
       className={resizeClass}
-      onClick={onClick}
+      onClick={onButtonClick}
     >
       <svg className={styles['resize__icon']}>
         <use className={styles['resize__icon--expand']} xlinkHref="#icon-expand" />
         <use className={styles['resize__icon--collapse']} xlinkHref="#icon-collapse" />
       </svg>
-    </div>
+    </button>
   );
 };
 
