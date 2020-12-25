@@ -7,7 +7,7 @@ import {
 
 import geojson from '@/assets/data/geojson.json';
 import styles from '@/components/LeafletMap/LeafletMap.scss';
-import { MapColor, Parameter } from '@/constants/constants';
+import { MapColor, Parameter, Screen } from '@/constants/constants';
 import { CountryDataInterface, ShownCountryInterface } from '@/types/entities';
 import getShownCountriesData from '@/utils/countries-data';
 
@@ -20,13 +20,14 @@ const mapStyle = {
 };
 
 interface LeafletMapProps {
+  screen: Screen;
   parameter: Parameter;
   countriesData: Array<CountryDataInterface>;
   onCountryClick(country: string): void;
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
-  const { parameter, countriesData } = props;
+  const { screen, parameter, countriesData } = props;
   const shownCountriesData = getShownCountriesData(countriesData, parameter);
 
   const getMaxCount = (data: Array<ShownCountryInterface>): ShownCountryInterface => data.reduce((previous, current) => (current.count > previous.count ? current : previous));
@@ -68,7 +69,10 @@ const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
     return countryData ? countryData.country : '';
   };
 
-  const onEachCountry = (area: Feature<Geometry, { [name: string]: string }>, layer: L.Path): void => {
+  const onEachCountry = (
+    area: Feature<Geometry, { [name: string]: string }>,
+    layer: L.Path
+  ): void => {
     const countryID: string = area.properties.ISO_A3;
     const countryName = getCountryNameByISO(shownCountriesData, countryID);
     const count = getCountryCount(shownCountriesData, countryID);
@@ -79,7 +83,7 @@ const LeafletMap: React.FC<LeafletMapProps> = (props: LeafletMapProps) => {
   };
 
   return (
-    <MapContainer className={styles['leaflet-map']} center={defaultLatLng} zoom={zoom}>
+    <MapContainer key={screen} className={styles['leaflet-map']} center={defaultLatLng} zoom={zoom}>
       <LayersControl.BaseLayer name="Black And White">
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

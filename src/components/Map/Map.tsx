@@ -38,13 +38,14 @@ const Map: React.FC<MapProps> = (props: MapProps) => {
     }
     setIsFullScreen(prev => !prev);
   };
-  const onCountryClick = (countryName:string) => props.changeCountry(countryName);
+  const onCountryClick = (countryName: string) => props.changeCountry(countryName);
 
   return (
     <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
       <Resize isFullScreen={isFullScreen} onClick={changeScreenView} />
       <Title screen={Screen.MAP} />
       <LeafletMap
+        screen={fullScreen}
         parameter={parameter}
         countriesData={countriesData}
         onCountryClick={onCountryClick}
@@ -64,7 +65,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<StateInterface, AxiosInstanc
   changeCountry(country: string) {
     dispatch(Operation.loadCountryHistoricalData(country))
       .then(() => dispatch(ActionCreator.changeCountry(country)))
-      .catch(error => { throw error; });
+      .catch(error => {
+        throw error;
+      });
   },
   changeActiveScreen(screen: Screen) {
     dispatch(ActionCreator.changeActiveScreen(screen));
