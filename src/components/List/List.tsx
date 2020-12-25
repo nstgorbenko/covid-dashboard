@@ -28,9 +28,7 @@ interface ListProps {
 }
 
 const List: React.FC<ListProps> = (props: ListProps) => {
-  const {
-    fullScreen, country, parameter, countriesData,
-  } = props;
+  const { fullScreen, country, parameter, countriesData } = props;
   const shownCountriesData = getShownCountriesData(countriesData, parameter);
   const screenName = Screen.LIST;
 
@@ -41,16 +39,16 @@ const List: React.FC<ListProps> = (props: ListProps) => {
     } else {
       props.changeActiveScreen(screenName);
     }
-    setIsFullScreen(prev => !prev);
+    setIsFullScreen((prev) => !prev);
   };
-  const onCountryClick = (countryName:string) => props.changeCountry(countryName);
+  const onCountryClick = (countryName: string) => props.changeCountry(countryName);
 
   return (
     <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
       <Resize isFullScreen={isFullScreen} onClick={changeScreenView} />
       <Title screen={screenName} />
       <ul className={styles['list__items']}>
-        {shownCountriesData.map(countryData => (
+        {shownCountriesData.map((countryData) => (
           <ListItem
             key={countryData.country}
             countryData={countryData}
@@ -74,7 +72,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<StateInterface, AxiosInstanc
   changeCountry(country: string) {
     dispatch(Operation.loadCountryHistoricalData(country))
       .then(() => dispatch(ActionCreator.changeCountry(country)))
-      .catch(error => { throw error; });
+      .catch((error) => {
+        throw error;
+      });
   },
   changeActiveScreen(screen: Screen) {
     dispatch(ActionCreator.changeActiveScreen(screen));

@@ -12,9 +12,15 @@ const Footer: React.FC = () => (
         <span>2020</span>
       </a>
       <div className="footer__dev">
-        <a className={styles['footer__link']} href="https://github.com/KingstonTwelve">KingstonTwelve</a>
-        <a className={styles['footer__link']} href="https://github.com/nstgorbenko">nstgorbenko</a>
-        <a className={styles['footer__link']} href="https://github.com/Torondil">Torondil</a>
+        <a className={styles['footer__link']} href="https://github.com/KingstonTwelve">
+          KingstonTwelve
+        </a>
+        <a className={styles['footer__link']} href="https://github.com/nstgorbenko">
+          nstgorbenko
+        </a>
+        <a className={styles['footer__link']} href="https://github.com/Torondil">
+          Torondil
+        </a>
       </div>
     </div>
   </footer>

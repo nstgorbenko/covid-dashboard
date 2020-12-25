@@ -12,16 +12,21 @@ interface ListItemProps {
 }
 
 const ListItem: React.FC<ListItemProps> = (props: ListItemProps) => {
-  const { countryData: { country, countryInfo, count }, activeCountry } = props;
+  const {
+    countryData: { country, countryInfo, count },
+    activeCountry,
+  } = props;
   const { flag } = countryInfo;
 
   const isActiveCountry = country === activeCountry;
 
   return (
     <li
-      className={isActiveCountry
-        ? classNames(styles['list__item'], styles['list__item--active'])
-        : styles['list__item']}
+      className={
+        isActiveCountry
+          ? classNames(styles['list__item'], styles['list__item--active'])
+          : styles['list__item']
+      }
     >
       <button
         className={styles['list__item-info']}

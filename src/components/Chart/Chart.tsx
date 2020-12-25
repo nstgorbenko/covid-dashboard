@@ -8,10 +8,16 @@ import { Parameter, Screen } from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
 import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
 import {
-  getGlobalHistoricalData, getCountryHistoricalData, getCountriesData, getGlobalData,
+  getGlobalHistoricalData,
+  getCountryHistoricalData,
+  getCountriesData,
+  getGlobalData,
 } from '@/store/data/selector';
 import {
-  StateInterface, HistoricalDataInterface, CountryDataInterface, GlobalDataInterface,
+  StateInterface,
+  HistoricalDataInterface,
+  CountryDataInterface,
+  GlobalDataInterface,
 } from '@/types/entities';
 import getShownChartData from '@/utils/chart-data';
 import { getScreenComponentClass } from '@/utils/common';
@@ -44,7 +50,9 @@ const Chart: React.FC<ChartProps> = (props: ChartProps) => {
 
   const { population } = !country
     ? globalData
-    : countriesData.find(countryData => countryData.country === country) as CountryDataInterface;
+    : (countriesData.find(
+        (countryData) => countryData.country === country
+      ) as CountryDataInterface);
   const historicalData = !country ? globalHistoricalData : countryHistoricalData;
   const shownData = getShownChartData(historicalData, population, parameter);
 
@@ -57,7 +65,7 @@ const Chart: React.FC<ChartProps> = (props: ChartProps) => {
     } else {
       props.changeActiveScreen(screenName);
     }
-    setIsFullScreen(prev => !prev);
+    setIsFullScreen((prev) => !prev);
   };
 
   return (

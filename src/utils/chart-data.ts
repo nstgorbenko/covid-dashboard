@@ -1,13 +1,12 @@
-import {
-  DataCount, DataValue, Parameter, Cases,
-} from '@/constants/constants';
+import { DataCount, DataValue, Parameter, Cases } from '@/constants/constants';
 import { HistoricalDataInterface, ChartData } from '@/types/entities';
 
-const getIncrementData = (data: Array<number>) => data.map((item, index, array) => item - (array[index - 1] || 0));
+const getIncrementData = (data: Array<number>) =>
+  data.map((item, index, array) => item - (array[index - 1] || 0));
 
 const getCounts = (casesData: Array<number>, population: number, count: DataCount) => {
   if (count === DataCount.PER_100) {
-    return casesData.map(data => +((data / population) * 100000).toFixed(2));
+    return casesData.map((data) => +((data / population) * 100000).toFixed(2));
   }
   return casesData;
 };
@@ -19,14 +18,15 @@ const getData = (
   cases: Cases = Cases.CUMULATIVE,
   count: DataCount = DataCount.TOTAL
 ) => {
-  const casesData: Array<number> = cases === Cases.CUMULATIVE
-    ? Object.values(data[parameter])
-    : getIncrementData(Object.values(data[parameter]));
+  const casesData: Array<number> =
+    cases === Cases.CUMULATIVE
+      ? Object.values(data[parameter])
+      : getIncrementData(Object.values(data[parameter]));
 
-  return ({
+  return {
     dates: Object.keys(data[parameter]),
     counts: getCounts(casesData, population, count),
-  });
+  };
 };
 
 const getShownChartData = (

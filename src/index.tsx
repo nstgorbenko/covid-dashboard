@@ -15,9 +15,7 @@ import reducer from '@/store/reducer';
 
 const store = createStore(
   reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api))
-  )
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)))
 );
 
 const init = () => {
@@ -33,8 +31,11 @@ const init = () => {
   );
 };
 
-store.dispatch(Operation.loadGlobalData())
+store
+  .dispatch(Operation.loadGlobalData())
   .then(() => store.dispatch(Operation.loadCountriesData()))
   .then(() => store.dispatch(Operation.loadGlobalHistoricalData()))
   .then(() => init())
-  .catch(error => { throw error; });
+  .catch((error) => {
+    throw error;
+  });

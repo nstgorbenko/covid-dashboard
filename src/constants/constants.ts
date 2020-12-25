@@ -1,6 +1,6 @@
 export enum DataCount {
   TOTAL = 'total',
-  PER_100 = 'per-100'
+  PER_100 = 'per-100',
 }
 
 export enum Parameter {

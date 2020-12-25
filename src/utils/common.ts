@@ -51,7 +51,8 @@ export const getScreenComponentClass = (
       styles['grid__element'],
       styles['grid__element--show']
     );
-  } if (!isFullScreenComponent && fullScreenName !== Screen.ALL) {
+  }
+  if (!isFullScreenComponent && fullScreenName !== Screen.ALL) {
     return classNames(
       styles[screenComponentName],
       styles['grid__element'],

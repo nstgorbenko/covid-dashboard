@@ -25,9 +25,7 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = (props: TableProps) => {
-  const {
-    fullScreen, country, parameter, countriesData, globalData,
-  } = props;
+  const { fullScreen, country, parameter, countriesData, globalData } = props;
   const shownData = getShownTableData(globalData, countriesData, country, parameter);
   const screenName = Screen.TABLE;
 
@@ -38,7 +36,7 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
     } else {
       props.changeActiveScreen(screenName);
     }
-    setIsFullScreen(prev => !prev);
+    setIsFullScreen((prev) => !prev);
   };
 
   return (
@@ -47,11 +45,8 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
       <Title screen={screenName} />
       <table className={styles['table__content']}>
         <tbody>
-          {shownData.map(data => (
-            <TableRow
-              key={data.name}
-              data={data}
-            />
+          {shownData.map((data) => (
+            <TableRow key={data.name} data={data} />
           ))}
         </tbody>
       </table>

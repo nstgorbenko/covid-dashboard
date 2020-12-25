@@ -38,9 +38,12 @@ const adaptCountryData = (data: ServerCountryInterface) => ({
   },
 });
 
-export const adaptCountriesData = (data: Array<ServerCountryInterface>): Array<CountryDataInterface> => data
-  .map(countryData => adaptCountryData(countryData))
-  .filter(({ country }) => EXCLUDED_COUNTRIES.indexOf(country) === -1);
+export const adaptCountriesData = (
+  data: Array<ServerCountryInterface>
+): Array<CountryDataInterface> =>
+  data
+    .map((countryData) => adaptCountryData(countryData))
+    .filter(({ country }) => EXCLUDED_COUNTRIES.indexOf(country) === -1);
 
 export const adaptCountryHistoricalData = (
   data: ServerCountryHistoricalInterface

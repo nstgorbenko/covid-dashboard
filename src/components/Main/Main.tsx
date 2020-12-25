@@ -11,11 +11,7 @@ import styles from './Main.scss';
 
 const Main: React.FC = () => (
   <main className={styles['main']}>
-    <div className={classNames(
-      styles['main__wrapper'],
-      styles['grid']
-    )}
-    >
+    <div className={classNames(styles['main__wrapper'], styles['grid'])}>
       <List />
       <Map />
       <Info />

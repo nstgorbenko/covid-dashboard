@@ -51,26 +51,30 @@ const ChartLine: React.FC<ChartLineProps> = (props: ChartLineProps) => {
             },
           },
           scales: {
-            xAxes: [{
-              gridLines: {
-                drawBorder: false,
+            xAxes: [
+              {
+                gridLines: {
+                  drawBorder: false,
+                },
+                ticks: {
+                  beginAtZero: true,
+                  lineHeight: 1.2,
+                  fontSize: 15,
+                  autoSkipPadding: 15,
+                },
               },
-              ticks: {
-                beginAtZero: true,
-                lineHeight: 1.2,
-                fontSize: 15,
-                autoSkipPadding: 15,
+            ],
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  lineHeight: 1.2,
+                  fontSize: 15,
+                  autoSkipPadding: 15,
+                  callback: (value: number) => value.toLocaleString(),
+                },
               },
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                lineHeight: 1.2,
-                fontSize: 15,
-                autoSkipPadding: 15,
-                callback: (value: number) => value.toLocaleString(),
-              },
-            }],
+            ],
           },
         }}
       />

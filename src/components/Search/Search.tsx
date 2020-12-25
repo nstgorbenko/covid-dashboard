@@ -20,14 +20,14 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = (props: SearchProps) => {
   const { country, countriesData } = props;
-  const countries = countriesData.map(countryData => countryData.country);
+  const countries = countriesData.map((countryData) => countryData.country);
 
   const [currentCountry, setCurrentCountry] = useState('');
   const [isSelectVisible, setSelectVisibility] = useState(false);
   const inputElement = useRef(null);
 
   const onCountryChoice = (newCountry: string) => {
-    (inputElement.current as unknown as HTMLInputElement).value = newCountry;
+    ((inputElement.current as unknown) as HTMLInputElement).value = newCountry;
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
           type="text"
           placeholder="Search"
           defaultValue={country}
-          onChange={e => {
+          onChange={(e) => {
             setCurrentCountry(e.target.value);
           }}
           onFocus={() => setSelectVisibility(true)}
@@ -54,9 +54,10 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
         <select size={3} className={searchClass}>
           {countries
             .filter(
-              countryName => countryName.toLowerCase().indexOf(currentCountry.toLowerCase()) !== -1
+              (countryName) =>
+                countryName.toLowerCase().indexOf(currentCountry.toLowerCase()) !== -1
             )
-            .map(countryName => (
+            .map((countryName) => (
               <option
                 key={countryName}
                 className={styles['select__options']}
@@ -101,7 +102,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<StateInterface, AxiosInstanc
   changeCountry(country: string) {
     dispatch(Operation.loadCountryHistoricalData(country))
       .then(() => dispatch(ActionCreator.changeCountry(country)))
-      .catch(error => { throw error; });
+      .catch((error) => {
+        throw error;
+      });
   },
 });
 

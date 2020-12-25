@@ -1,6 +1,4 @@
-import {
-  DataCount, DataValue, PARAMETERS_LIST, Parameter,
-} from '@/constants/constants';
+import { DataCount, DataValue, PARAMETERS_LIST, Parameter } from '@/constants/constants';
 import { CountryDataInterface, GlobalDataInterface, ShownTableInterface } from '@/types/entities';
 
 const TABLE_ROWS = ['Confirmed', 'Deaths', 'Recovered'];
@@ -47,10 +45,17 @@ const getTableCount = (data: GlobalDataInterface | CountryDataInterface, paramet
   }
 };
 
-const getShownTableData = (globalData: GlobalDataInterface, countriesData: Array<CountryDataInterface>, country: string, parameter: Parameter): Array<ShownTableInterface> => {
+const getShownTableData = (
+  globalData: GlobalDataInterface,
+  countriesData: Array<CountryDataInterface>,
+  country: string,
+  parameter: Parameter
+): Array<ShownTableInterface> => {
   const rawData = !country
     ? globalData
-    : countriesData.find(countryData => countryData.country === country) as CountryDataInterface;
+    : (countriesData.find(
+        (countryData) => countryData.country === country
+      ) as CountryDataInterface);
   const currentParameterIndex = PARAMETERS_LIST.indexOf(parameter);
   const tableDataStartIndex = Math.trunc(currentParameterIndex / 3) * 3;
 
