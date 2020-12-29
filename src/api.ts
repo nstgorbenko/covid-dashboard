@@ -9,7 +9,9 @@ const api = axios.create({
 });
 
 const onSuccess = (response: AxiosResponse) => response;
-const onFail = (error: AxiosError) => { throw error; };
+const onFail = (error: AxiosError) => {
+  throw error;
+};
 api.interceptors.response.use(onSuccess, onFail);
 
 export default api;

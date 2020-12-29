@@ -1,8 +1,15 @@
-import { ServerGlobalInterface, ServerCountryInterface, ServerCountryHistoricalInterface } from '@/types/entities';
+import {
+  ServerGlobalInterface,
+  ServerCountryInterface,
+  ServerCountryHistoricalInterface,
+  GlobalDataInterface,
+  CountryDataInterface,
+  HistoricalDataInterface,
+} from '@/types/entities';
 
 const EXCLUDED_COUNTRIES = ['Diamond Princess', 'MS Zaandam'];
 
-export const adaptGlobalData = (data: ServerGlobalInterface) => ({
+export const adaptGlobalData = (data: ServerGlobalInterface): GlobalDataInterface => ({
   updated: data.updated,
   cases: data.cases,
   todayCases: data.todayCases,
@@ -31,8 +38,13 @@ const adaptCountryData = (data: ServerCountryInterface) => ({
   },
 });
 
-export const adaptCountriesData = (data: Array<ServerCountryInterface>) => data
-  .map(countryData => adaptCountryData(countryData))
-  .filter(({ country }) => EXCLUDED_COUNTRIES.indexOf(country) === -1);
+export const adaptCountriesData = (
+  data: Array<ServerCountryInterface>
+): Array<CountryDataInterface> =>
+  data
+    .map((countryData) => adaptCountryData(countryData))
+    .filter(({ country }) => EXCLUDED_COUNTRIES.indexOf(country) === -1);
 
-export const adaptCountryHistoricalData = (data: ServerCountryHistoricalInterface) => data.timeline;
+export const adaptCountryHistoricalData = (
+  data: ServerCountryHistoricalInterface
+): HistoricalDataInterface => data.timeline;

@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import {connect} from "react-redux";
-import styles from './Chart.scss';
+
 import Resize from '@/components/Resize';
 import Title from '@/components/Title';
 import { Parameter, Screen } from '@/constants/constants';
-import { StateInterface, HistoricalDataInterface, CountryDataInterface, GlobalDataInterface } from '@/types/entities';
-import { getGlobalHistoricalData, getCountryHistoricalData, getCountriesData, getGlobalData } from '@/store/data/selector';
-import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
 import { ActionCreator } from '@/store/app/app';
+import { getActiveScreen, getCountry, getParameter } from '@/store/app/selector';
+import {
+  getGlobalHistoricalData,
+  getCountryHistoricalData,
+  getCountriesData,
+  getGlobalData,
+} from '@/store/data/selector';
+import {
+  StateInterface,
+  HistoricalDataInterface,
+  CountryDataInterface,
+  GlobalDataInterface,
+} from '@/types/entities';
 import getShownChartData from '@/utils/chart-data';
 import { getScreenComponentClass } from '@/utils/common';
+
 import ChartLine from '../ChartLine';
+
+import styles from './Chart.scss';
 
 interface ChartProps {
   fullScreen: Screen;
@@ -25,9 +38,21 @@ interface ChartProps {
 }
 
 const Chart: React.FC<ChartProps> = (props: ChartProps) => {
-  const { fullScreen, country, parameter, countriesData, globalData, globalHistoricalData, countryHistoricalData, changeActiveScreen } = props;
+  const {
+    fullScreen,
+    country,
+    parameter,
+    countriesData,
+    globalData,
+    globalHistoricalData,
+    countryHistoricalData,
+  } = props;
 
-  const { population } = !country ? globalData : countriesData.find((countryData) => countryData.country === country) as CountryDataInterface;
+  const { population } = !country
+    ? globalData
+    : (countriesData.find(
+        (countryData) => countryData.country === country
+      ) as CountryDataInterface);
   const historicalData = !country ? globalHistoricalData : countryHistoricalData;
   const shownData = getShownChartData(historicalData, population, parameter);
 
@@ -35,15 +60,19 @@ const Chart: React.FC<ChartProps> = (props: ChartProps) => {
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   const changeScreenView = () => {
-    isFullScreen ? changeActiveScreen(Screen.ALL) : changeActiveScreen(screenName);
-    setIsFullScreen(prev => !prev);
+    if (isFullScreen) {
+      props.changeActiveScreen(Screen.ALL);
+    } else {
+      props.changeActiveScreen(screenName);
+    }
+    setIsFullScreen((prev) => !prev);
   };
 
   return (
     <div className={getScreenComponentClass(screenName, isFullScreen, fullScreen, styles)}>
-      <Resize isFullScreen={isFullScreen} onClick={changeScreenView}/>
-      <Title screen={screenName}/>
-      <ChartLine values={shownData}/>
+      <Resize isFullScreen={isFullScreen} onClick={changeScreenView} />
+      <Title screen={screenName} />
+      <ChartLine values={shownData} />
     </div>
   );
 };

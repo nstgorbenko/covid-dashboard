@@ -4,12 +4,21 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import {
-  Parameter, parameterToTitle, parameterToTableTitle, PARAMETERS_LIST, Screen } from '@/constants/constants';
-import { getNextArrayItem, getPreviousArrayItem, getNextThirdItem, getPreviousThirdItem } from '@/utils/common';
-
+  Parameter,
+  parameterToTitle,
+  parameterToTableTitle,
+  PARAMETERS_LIST,
+  Screen,
+} from '@/constants/constants';
 import { ActionCreator } from '@/store/app/app';
 import { getParameter } from '@/store/app/selector';
 import { StateInterface } from '@/types/entities';
+import {
+  getNextArrayItem,
+  getPreviousArrayItem,
+  getNextThirdItem,
+  getPreviousThirdItem,
+} from '@/utils/common';
 
 import styles from './Title.scss';
 
@@ -20,37 +29,39 @@ interface TitleProps {
 }
 
 const Title: React.FC<TitleProps> = (props: TitleProps) => {
-  const { parameter, screen, changeParameter } = props;
+  const { parameter, screen } = props;
   const isTableScreen = screen === Screen.TABLE;
   const title = !isTableScreen ? parameterToTitle[parameter] : parameterToTableTitle[parameter];
 
   const showPreviousTitle = () => {
-    isTableScreen
-      ? changeParameter(getPreviousThirdItem(PARAMETERS_LIST, parameter) as Parameter)
-      : changeParameter(getPreviousArrayItem(PARAMETERS_LIST, parameter) as Parameter);
+    if (isTableScreen) {
+      props.changeParameter(getPreviousThirdItem(PARAMETERS_LIST, parameter) as Parameter);
+    } else {
+      props.changeParameter(getPreviousArrayItem(PARAMETERS_LIST, parameter) as Parameter);
+    }
   };
 
   const showNextTitle = () => {
-    isTableScreen
-      ? changeParameter(getNextThirdItem(PARAMETERS_LIST, parameter) as Parameter)
-      : changeParameter(getNextArrayItem(PARAMETERS_LIST, parameter) as Parameter);
+    if (isTableScreen) {
+      props.changeParameter(getNextThirdItem(PARAMETERS_LIST, parameter) as Parameter);
+    } else {
+      props.changeParameter(getNextArrayItem(PARAMETERS_LIST, parameter) as Parameter);
+    }
   };
 
   return (
     <div className={styles['title']}>
-      <p
-        className={classNames(
-          styles['title__arrow'],
-          styles['title__arrow--left']
-        )}
+      <button
+        type="button"
+        aria-label="Previous value"
+        className={classNames(styles['title__arrow'], styles['title__arrow--left'])}
         onClick={showPreviousTitle}
       />
       <p className={styles['title__text']}>{title}</p>
-      <p
-        className={classNames(
-          styles['title__arrow'],
-          styles['title__arrow--right']
-        )}
+      <button
+        type="button"
+        aria-label="Next value"
+        className={classNames(styles['title__arrow'], styles['title__arrow--right'])}
         onClick={showNextTitle}
       />
     </div>

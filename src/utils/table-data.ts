@@ -1,13 +1,15 @@
-import {
-  DataCount, DataValue, PARAMETERS_LIST, Parameter,
-} from '@/constants/constants';
+import { DataCount, DataValue, PARAMETERS_LIST, Parameter } from '@/constants/constants';
 import { CountryDataInterface, GlobalDataInterface, ShownTableInterface } from '@/types/entities';
 
 const TABLE_ROWS = ['Confirmed', 'Deaths', 'Recovered'];
 
-const getData = (data: GlobalDataInterface | CountryDataInterface, parameter: DataValue, count: DataCount = DataCount.TOTAL) => {
+const getData = (
+  data: GlobalDataInterface | CountryDataInterface,
+  parameter: DataValue,
+  count: DataCount = DataCount.TOTAL
+) => {
   if (count === DataCount.PER_100) {
-    return (data[parameter] / data.population * 100000).toFixed(2);
+    return ((data[parameter] / data.population) * 100000).toFixed(2);
   }
   return data[parameter];
 };
@@ -39,12 +41,21 @@ const getTableCount = (data: GlobalDataInterface | CountryDataInterface, paramet
     case Parameter.DAY_RECOVERED_PER_100:
       return getData(data, DataValue.TODAY_RECOVERED, DataCount.PER_100);
     default:
-      throw new Error(`Unknown parameter: ${parameter}`);
+      throw new Error(`Unknown parameter: ${parameter as string}`);
   }
 };
 
-const getShownTableData = (globalData: GlobalDataInterface, countriesData: Array<CountryDataInterface>, country: string, parameter: Parameter): Array<ShownTableInterface> => {
-  const rawData = !country ? globalData : countriesData.find(countryData => countryData.country === country) as CountryDataInterface;
+const getShownTableData = (
+  globalData: GlobalDataInterface,
+  countriesData: Array<CountryDataInterface>,
+  country: string,
+  parameter: Parameter
+): Array<ShownTableInterface> => {
+  const rawData = !country
+    ? globalData
+    : (countriesData.find(
+        (countryData) => countryData.country === country
+      ) as CountryDataInterface);
   const currentParameterIndex = PARAMETERS_LIST.indexOf(parameter);
   const tableDataStartIndex = Math.trunc(currentParameterIndex / 3) * 3;
 
